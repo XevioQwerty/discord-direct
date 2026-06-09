@@ -1,0 +1,11 @@
+# Ignore local environment secrets
+.env
+
+# Ignore bot application cache and logs
+cache/
+*.log
+
+# Python system remnants
+__pycache__/
+*.pyc
+venv/

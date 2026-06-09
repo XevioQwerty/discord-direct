@@ -1,0 +1,24 @@
+{
+  "message": {
+    "content": "Welcome to the server! 🎉",
+    "embeds": [
+      {
+        "title": "Server Rules",
+        "description": "1. Be respectful to others.\n2. No spam or self-promotion.\n3. Keep topics in their proper channels.",
+        "color": 3447003
+      }
+    ]
+  },
+  "buttons": [
+    {
+      "label": "Get Roles",
+      "style": "primary",
+      "ephemeral": "roles.json"
+    },
+    {
+      "label": "Official Website",
+      "style": "link",
+      "url": "https://google.com"
+    }
+  ]
+}
