@@ -1,4 +1,4 @@
-"""discogoon — Discord bot mirroring Discohook functionality via GitHub-hosted JSON."""
+"""discogoon — Discord bot mirroring Discohook functionality natively via GitHub-hosted JSON."""
 from __future__ import annotations
 
 import datetime
@@ -6,11 +6,12 @@ import json
 import os
 import re
 from pathlib import Path
-from dotenv import load_dotenv
+
 import aiohttp
 import discord
 from discord import app_commands
 from discord.ext import commands
+from dotenv import load_dotenv
 
 # ── Config ────────────────────────────────────────────────────────────────────
 load_dotenv()
@@ -95,7 +96,7 @@ def build_embeds(msg_block: dict) -> list[discord.Embed]:
             )
         if footer := e.get("footer"):
             embed.set_footer(
-                text=footer.get("text") or "",
+                name=footer.get("text") or "",
                 icon_url=footer.get("icon_url"),
             )
         if thumb := e.get("thumbnail"):
@@ -145,10 +146,21 @@ class EphemeralButton(discord.ui.Button):
                 f"Could not load `{filename}`: {exc}", ephemeral=True
             )
             return
-        msg_block = data.get("message", {})
+        
+        msg_block, _ = extract_message_payload(data)
+        embeds = build_embeds(msg_block)
+        content = msg_block.get("content") or None
+
+        if not content and not embeds:
+            await interaction.response.send_message(
+                f"The target file `{filename}` resolved to an empty message layout.",
+                ephemeral=True
+            )
+            return
+
         await interaction.response.send_message(
-            content=msg_block.get("content") or None,
-            embeds=build_embeds(msg_block),
+            content=content,
+            embeds=embeds,
             ephemeral=True,
         )
 
@@ -165,15 +177,61 @@ def _ensure_registered(ephemeral_file: str) -> None:
     _registered_ephemerals.add(ephemeral_file)
 
 
+def parse_buttons(data: dict) -> list[dict]:
+    """Normalize both legacy 'buttons' config and native Discohook 'components' layouts."""
+    normalized: list[dict] = []
+    
+    # Check manual/legacy configuration list first
+    if "buttons" in data and isinstance(data["buttons"], list):
+        return data["buttons"]
+
+    # Read standard Discohook style components (Action Rows)
+    if "components" in data and isinstance(data["components"], list):
+        for row in data["components"]:
+            if not isinstance(row, dict):
+                continue
+            
+            # Action rows contain lists of actual interactive items (type 1 = action row)
+            items = row.get("components", []) if row.get("type") == 1 else [row]
+            for item in items:
+                if not isinstance(item, dict) or item.get("type") != 2: # 2 = Button
+                    continue
+                
+                style_val = item.get("style")
+                style_map = {1: "primary", 2: "secondary", 3: "success", 4: "danger", 5: "link"}
+                
+                if isinstance(style_val, int):
+                    style_str = style_map.get(style_val, "primary")
+                else:
+                    style_str = str(style_val or "primary").lower()
+
+                btn_data = {
+                    "label": item.get("label") or "Button",
+                    "style": style_str,
+                    "url": item.get("url"),
+                    "custom_id": item.get("custom_id"),
+                    "ephemeral": item.get("ephemeral")
+                }
+
+                # Extract trigger targets mapped directly inside Discohook custom ID labels
+                cid = item.get("custom_id") or ""
+                if cid.startswith("ephemeral:"):
+                    btn_data["ephemeral"] = cid[len("ephemeral:"):]
+
+                normalized.append(btn_data)
+                
+    return normalized
+
+
 def build_view(buttons: list[dict]) -> discord.ui.View | None:
-    """Build a persistent View from the JSON buttons list. Returns None if no valid buttons."""
+    """Build a persistent View from the normalized buttons list."""
     if not buttons:
         return None
     view = discord.ui.View(timeout=None)
     for btn in buttons:
         style_str = (btn.get("style") or "primary").lower()
         label     = btn.get("label") or "Button"
-        if style_str == "link":
+        if style_str == "link" or btn.get("url"):
             url = btn.get("url") or ""
             if url:
                 view.add_item(discord.ui.Button(
@@ -190,6 +248,20 @@ def build_view(buttons: list[dict]) -> discord.ui.View | None:
             _ensure_registered(eph_file)
     return view if view.children else None
 
+
+def extract_message_payload(data: dict) -> tuple[dict, list[dict]]:
+    """
+    Extracts the displayable message block and button references.
+    Handles legacy wrapper structure and flat, raw Discohook structures.
+    """
+    if "message" in data and isinstance(data["message"], dict):
+        msg_block = data["message"]
+    else:
+        msg_block = data
+        
+    buttons = parse_buttons(data)
+    return msg_block, buttons
+
 # ── Message link parser ────────────────────────────────────────────────────────
 
 _LINK_RE = re.compile(
@@ -205,19 +277,23 @@ def parse_message_link(link: str) -> tuple[int, int, int] | None:
 
 class DiscoGoon(commands.Bot):
     def __init__(self) -> None:
+        intents = discord.Intents.default()
+        intents.message_content = True
+
         super().__init__(
             command_prefix=commands.when_mentioned,
-            intents=discord.Intents.default(),
+            intents=intents,
         )
 
     async def setup_hook(self) -> None:
         _load_disk()
         # Re-register persistent views for every ephemeral button target in cache
         for data in _cache.values():
-            for btn in data.get("buttons", []):
+            _, buttons = extract_message_payload(data)
+            for btn in buttons:
                 if eph := btn.get("ephemeral"):
                     _ensure_registered(eph)
-        # Sync global slash commands (propagation can take up to ~1 hour after first deploy)
+        # Sync global slash commands
         await self.tree.sync()
 
     async def on_ready(self) -> None:
@@ -229,60 +305,58 @@ bot = DiscoGoon()
 
 # ── /send ──────────────────────────────────────────────────────────────────────
 
-@bot.tree.command(name="send", description="Send a message via JSON using a Channel Name, ID, Mention, or Link")
+@bot.tree.command(name="send", description="Send a message defined by a JSON file to a channel/thread ID or link")
 @app_commands.describe(
     file="Filename in the GitHub embeds/ folder, e.g. welcome.json",
-    target="Channel/Thread ID, Mention (#channel), or full Discord URL link",
+    target="Channel/Thread ID, Channel Mention (#channel), or full Discord URL Link",
 )
 async def cmd_send(
     interaction: discord.Interaction,
     file: str,
-    target: str,  # Switched to str to accept IDs and Links directly
+    target: str,
 ) -> None:
     await interaction.response.defer(ephemeral=True)
     
-    # 1. Parse out raw numbers if the user pasted a link or mention layout
-    # This extracts the ID whether it's '12345', '<#12345>', or '.../channels/guild/12345'
+    # Parse out ID
     match = re.search(r"(\d+)\s*$", target.strip())
     if not match:
         await interaction.followup.send(
-            f"Could not parse a valid ID from your target input: `{target}`. Please provide a raw ID or Link.", 
+            f"Could not parse a valid ID from target: `{target}`. Ensure it is an ID, mention, or link.", 
             ephemeral=True
         )
         return
         
     target_id = int(match.group(1))
 
-    # 2. Try to fetch the channel or thread from cache or API
+    # Resolve target destination
     destination = bot.get_channel(target_id)
     if destination is None:
         try:
             destination = await bot.fetch_channel(target_id)
         except discord.NotFound:
             await interaction.followup.send(
-                f"Could not find a channel or thread with ID `{target_id}`. Make sure the bot is in that server.", 
+                f"Could not find a channel or thread with ID `{target_id}`.", 
                 ephemeral=True
             )
             return
         except discord.Forbidden:
             await interaction.followup.send(
-                f"Bot does not have permission to access channel/thread `{target_id}`.", 
+                f"Missing permissions to access channel/thread `{target_id}`.", 
                 ephemeral=True
             )
             return
         except Exception as exc:
-            await interaction.followup.send(f"Error fetching destination: {exc}", ephemeral=True)
+            await interaction.followup.send(f"Error fetching channel: {exc}", ephemeral=True)
             return
 
-    # 3. Verify the resolved destination supports message sending
     if not hasattr(destination, "send"):
         await interaction.followup.send(
-            f"Target {destination.mention} is a category or voice channel that doesn't support text messages.",
+            f"Target {destination.mention} does not support text messages.",
             ephemeral=True,
         )
         return
 
-    # 4. Fetch JSON payload and build message
+    # Fetch JSON payload
     try:
         data = await get_file(file)
     except json.JSONDecodeError as exc:
@@ -292,21 +366,28 @@ async def cmd_send(
         await interaction.followup.send(f"Failed to fetch `{file}`: {exc}", ephemeral=True)
         return
 
-    msg_block = data.get("message", {})
-    view      = build_view(data.get("buttons", []))
-    send_kw: dict = dict(
-        content=msg_block.get("content") or None,
-        embeds=build_embeds(msg_block),
-    )
+    msg_block, buttons = extract_message_payload(data)
+    embeds = build_embeds(msg_block)
+    content = msg_block.get("content") or None
+    view = build_view(buttons)
+
+    # Prevent sending empty payloads to avoid 400 Bad Request error
+    if not content and not embeds:
+        await interaction.followup.send(
+            f"Error: The JSON payload inside `{file}` contains no message text and no embeds.",
+            ephemeral=True
+        )
+        return
+
+    send_kw: dict = dict(content=content, embeds=embeds)
     if view is not None:
         send_kw["view"] = view
 
-    # 5. Ship it out
     try:
         sent = await destination.send(**send_kw)  # type: ignore[attr-defined]
     except discord.Forbidden:
         await interaction.followup.send(
-            f"Missing permission to send messages in {destination.mention}.", ephemeral=True
+            f"Missing permissions to send messages in {destination.mention}.", ephemeral=True
         )
         return
     except Exception as exc:
@@ -323,7 +404,7 @@ async def cmd_send(
 @app_commands.describe(
     message_link="Full Discord message link",
     file="JSON file to replace message content/embeds (optional)",
-    buttons="JSON file whose buttons array replaces current buttons (optional)",
+    buttons="JSON file whose components replace current buttons (optional)",
 )
 async def cmd_edit(
     interaction: discord.Interaction,
@@ -379,9 +460,12 @@ async def cmd_edit(
         except Exception as exc:
             await interaction.followup.send(f"Failed to fetch `{file}`: {exc}", ephemeral=True)
             return
-        mb = fdata.get("message", {})
+        mb, buttons_list = extract_message_payload(fdata)
         edit_kw["content"] = mb.get("content") or None
         edit_kw["embeds"]  = build_embeds(mb)
+        # Automatically updates buttons too if present in the main payload
+        if buttons_list:
+            edit_kw["view"] = build_view(buttons_list)
 
     if buttons:
         try:
@@ -392,8 +476,8 @@ async def cmd_edit(
         except Exception as exc:
             await interaction.followup.send(f"Failed to fetch `{buttons}`: {exc}", ephemeral=True)
             return
-        # None clears components; a View replaces them
-        edit_kw["view"] = build_view(bdata.get("buttons", []))
+        _, parsed_btns = extract_message_payload(bdata)
+        edit_kw["view"] = build_view(parsed_btns)
 
     try:
         await msg.edit(**edit_kw)
@@ -434,7 +518,9 @@ async def cmd_update(interaction: discord.Interaction) -> None:
             _cache[fn]       = data
             _cache_times[fn] = datetime.datetime.now(tz=datetime.timezone.utc)
             _save_disk(fn, data)
-            for btn in data.get("buttons", []):
+            
+            _, buttons = extract_message_payload(data)
+            for btn in buttons:
                 if eph := btn.get("ephemeral"):
                     _ensure_registered(eph)
             succeeded.append(fn)
@@ -465,4 +551,7 @@ async def cmd_list(interaction: discord.Interaction) -> None:
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    bot.run(BOT_TOKEN)
+    if not BOT_TOKEN:
+        print("CRITICAL: DISCORD_BOT_TOKEN environment variable not set.")
+    else:
+        bot.run(BOT_TOKEN)
