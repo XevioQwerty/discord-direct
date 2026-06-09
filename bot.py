@@ -278,7 +278,6 @@ def parse_message_link(link: str) -> tuple[int, int, int] | None:
 class DiscoGoon(commands.Bot):
     def __init__(self) -> None:
         intents = discord.Intents.default()
-        intents.message_content = True
 
         super().__init__(
             command_prefix=commands.when_mentioned,
