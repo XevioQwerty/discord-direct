@@ -229,17 +229,60 @@ bot = DiscoGoon()
 
 # ── /send ──────────────────────────────────────────────────────────────────────
 
-@bot.tree.command(name="send", description="Send a message defined by a JSON file to a channel")
+@bot.tree.command(name="send", description="Send a message via JSON using a Channel Name, ID, Mention, or Link")
 @app_commands.describe(
     file="Filename in the GitHub embeds/ folder, e.g. welcome.json",
-    channel="Target text channel",
+    target="Channel/Thread ID, Mention (#channel), or full Discord URL link",
 )
 async def cmd_send(
     interaction: discord.Interaction,
     file: str,
-    channel: discord.TextChannel,
+    target: str,  # Switched to str to accept IDs and Links directly
 ) -> None:
     await interaction.response.defer(ephemeral=True)
+    
+    # 1. Parse out raw numbers if the user pasted a link or mention layout
+    # This extracts the ID whether it's '12345', '<#12345>', or '.../channels/guild/12345'
+    match = re.search(r"(\d+)\s*$", target.strip())
+    if not match:
+        await interaction.followup.send(
+            f"Could not parse a valid ID from your target input: `{target}`. Please provide a raw ID or Link.", 
+            ephemeral=True
+        )
+        return
+        
+    target_id = int(match.group(1))
+
+    # 2. Try to fetch the channel or thread from cache or API
+    destination = bot.get_channel(target_id)
+    if destination is None:
+        try:
+            destination = await bot.fetch_channel(target_id)
+        except discord.NotFound:
+            await interaction.followup.send(
+                f"Could not find a channel or thread with ID `{target_id}`. Make sure the bot is in that server.", 
+                ephemeral=True
+            )
+            return
+        except discord.Forbidden:
+            await interaction.followup.send(
+                f"Bot does not have permission to access channel/thread `{target_id}`.", 
+                ephemeral=True
+            )
+            return
+        except Exception as exc:
+            await interaction.followup.send(f"Error fetching destination: {exc}", ephemeral=True)
+            return
+
+    # 3. Verify the resolved destination supports message sending
+    if not hasattr(destination, "send"):
+        await interaction.followup.send(
+            f"Target {destination.mention} is a category or voice channel that doesn't support text messages.",
+            ephemeral=True,
+        )
+        return
+
+    # 4. Fetch JSON payload and build message
     try:
         data = await get_file(file)
     except json.JSONDecodeError as exc:
@@ -258,11 +301,12 @@ async def cmd_send(
     if view is not None:
         send_kw["view"] = view
 
+    # 5. Ship it out
     try:
-        sent = await channel.send(**send_kw)
+        sent = await destination.send(**send_kw)  # type: ignore[attr-defined]
     except discord.Forbidden:
         await interaction.followup.send(
-            f"Missing permission to send in {channel.mention}.", ephemeral=True
+            f"Missing permission to send messages in {destination.mention}.", ephemeral=True
         )
         return
     except Exception as exc:
