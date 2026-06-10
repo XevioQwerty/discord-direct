@@ -44,6 +44,24 @@ async def _fetch_github(filename: str) -> dict:
     return json.loads(text)  # raises JSONDecodeError on bad JSON
 
 
+async def _list_github_embeds() -> list[str]:
+    """Return every *.json filename in the repo's embeds/ folder via the GitHub contents API."""
+    url = (
+        f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}"
+        f"/contents/embeds?ref={GITHUB_BRANCH}"
+    )
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, headers={"Accept": "application/vnd.github+json"}) as resp:
+            if resp.status != 200:
+                raise RuntimeError(f"HTTP {resp.status} listing embeds/ folder")
+            listing = await resp.json()
+    return [
+        entry["name"]
+        for entry in listing
+        if entry.get("type") == "file" and entry.get("name", "").endswith(".json")
+    ]
+
+
 def _save_disk(filename: str, data: dict) -> None:
     Path(CACHE_DIR).mkdir(parents=True, exist_ok=True)
     (Path(CACHE_DIR) / filename).write_text(
@@ -491,15 +509,29 @@ async def cmd_edit(
 
 # ── /update ────────────────────────────────────────────────────────────────────
 
-@bot.tree.command(name="update", description="Re-fetch all cached files from GitHub")
+@bot.tree.command(name="update", description="Re-fetch all files in the GitHub embeds/ folder")
 async def cmd_update(interaction: discord.Interaction) -> None:
     await interaction.response.defer(ephemeral=True)
 
-    if not _cache:
-        await interaction.followup.send("Cache is empty — nothing to update.", ephemeral=True)
+    # Discover every file currently in the repo so new additions are picked up,
+    # even if they've never been sent/edited before. Fall back to known cache
+    # keys if the listing API is unreachable.
+    try:
+        discovered = await _list_github_embeds()
+    except Exception as exc:
+        discovered = []
+        if not _cache:
+            await interaction.followup.send(
+                f"Could not list the embeds/ folder ({exc}) and cache is empty — nothing to update.",
+                ephemeral=True,
+            )
+            return
+
+    filenames = sorted(set(discovered) | set(_cache.keys()))
+    if not filenames:
+        await interaction.followup.send("No JSON files found in the embeds/ folder.", ephemeral=True)
         return
 
-    filenames = list(_cache.keys())
     _cache.clear()
     _cache_times.clear()
     for p in Path(CACHE_DIR).glob("*.json"):
