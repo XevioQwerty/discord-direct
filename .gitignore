@@ -4,6 +4,7 @@
 # Ignore bot application cache and logs
 cache/
 *.log
+CLAUDE.md
 
 # Python system remnants
 __pycache__/
