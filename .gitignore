@@ -5,6 +5,7 @@
 cache/
 *.log
 CLAUDE.md
+discogoon.service
 
 # Python system remnants
 __pycache__/
