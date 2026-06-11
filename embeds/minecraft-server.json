@@ -1,0 +1,39 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "⭐ Creating a Minecraft Server",
+        "description": "Three ways to host a server — pick the one that fits your budget and skill level. All methods below work on current **and** older versions.",
+        "color": 5763719,
+        "image": {
+          "url": "https://i.imgur.com/tPXhA2t.png"
+        },
+        "fields": [
+          {
+            "name": "🟢 Option 1 — Free Online Host  ·  Easiest",
+            "value": "**Cost:** Free  ·  **Difficulty:** Easy\n\nMake a free account on [**Aternos**](https://aternos.org), create a server, choose your version, and hit **Start**. Share the address with friends — no setup on your end.\n-# Free servers sleep when empty and have limited RAM. For 24/7 uptime and more power, paid hosts like Shockbyte, BisectHosting or Apex are worth it.",
+            "inline": false
+          },
+          {
+            "name": "🔵 Option 2 — Host with Essential  ·  Moderate",
+            "value": "**Cost:** Free  ·  **Difficulty:** Moderate\n\nInstall the [**Essential Mod**](https://essential.gg/download), open your world in-game, and click **Invite Friends** — Bedrock-style P2P, no port forwarding.\n⚠️ -# Essential is phasing out World Hosting in an upcoming update. It still works on current & older versions for now.",
+            "inline": false
+          },
+          {
+            "name": "🔴 Option 3 — Self-Host on Your PC  ·  Advanced",
+            "value": "**Cost:** Free  ·  **Difficulty:** Hard\n\n1. Install [**Java**](https://www.java.com/download) and grab the official [**server.jar**](https://www.minecraft.net/en-us/download/server).\n2. Put it in its own folder and launch it with the start script below.\n3. Accept the EULA (`eula.txt`), then port-forward **25565** — or skip that with [**playit.gg**](https://playit.gg) for a free public address.",
+            "inline": false
+          },
+          {
+            "name": "📄 Sample  start.bat",
+            "value": "```bat\n@echo off\njava -Xmx2G -Xms2G -jar server.jar nogui\npause\n```\n-# `-Xmx2G` = max RAM. Bump to 4G/6G for more players.",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "Minecraft Server Guide"
+        }
+      }
+    ]
+  }
+}
