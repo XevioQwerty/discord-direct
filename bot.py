@@ -67,6 +67,26 @@ async def _list_github_embeds() -> list[str]:
     ]
 
 
+# ── Embed-file listing cache (for autocomplete & the right-click editor) ─────────
+_embed_list: list[str] = []
+_embed_list_time: datetime.datetime | None = None
+
+
+async def _get_embed_list(max_age: float = 60.0) -> list[str]:
+    """Cached, sorted list of *.json files in the repo's embeds/ folder."""
+    global _embed_list, _embed_list_time
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    if _embed_list_time and (now - _embed_list_time).total_seconds() < max_age and _embed_list:
+        return _embed_list
+    try:
+        _embed_list = sorted(await _list_github_embeds())
+        _embed_list_time = now
+    except Exception:
+        if not _embed_list:
+            _embed_list = sorted(_cache.keys())  # fall back to whatever we have cached
+    return _embed_list
+
+
 def _save_disk(filename: str, data: dict) -> None:
     Path(CACHE_DIR).mkdir(parents=True, exist_ok=True)
     (Path(CACHE_DIR) / filename).write_text(
@@ -95,6 +115,25 @@ async def get_file(filename: str) -> dict:
     _cache_times[filename] = datetime.datetime.now(tz=datetime.timezone.utc)
     _save_disk(filename, data)
     return data
+
+
+async def get_file_fresh(filename: str) -> dict:
+    """Always re-fetch *filename* from GitHub (cache-busted) and refresh caches."""
+    data = await _fetch_github(filename)
+    _cache[filename] = data
+    _cache_times[filename] = datetime.datetime.now(tz=datetime.timezone.utc)
+    _save_disk(filename, data)
+    return data
+
+
+async def _file_autocomplete(
+    interaction: discord.Interaction, current: str
+) -> list[app_commands.Choice[str]]:
+    """Live dropdown of repo embed files for the `file`/`buttons` command options."""
+    cur = current.lower()
+    files = await _get_embed_list()
+    matches = [f for f in files if cur in f.lower()] or files
+    return [app_commands.Choice(name=f, value=f) for f in matches[:25]]
 
 # ── Embed builder ──────────────────────────────────────────────────────────────
 
@@ -332,6 +371,7 @@ bot = DiscoGoon()
     file="Filename in the GitHub embeds/ folder, e.g. welcome.json",
     target="Channel/Thread ID, Channel Mention (#channel), or full Discord URL Link",
 )
+@app_commands.autocomplete(file=_file_autocomplete)
 async def cmd_send(
     interaction: discord.Interaction,
     file: str,
@@ -428,6 +468,7 @@ async def cmd_send(
     file="JSON file to replace message content/embeds (optional)",
     buttons="JSON file whose components replace current buttons (optional)",
 )
+@app_commands.autocomplete(file=_file_autocomplete, buttons=_file_autocomplete)
 async def cmd_edit(
     interaction: discord.Interaction,
     message_link: str,
@@ -583,6 +624,81 @@ async def cmd_list(interaction: discord.Interaction) -> None:
         ts_str = ts.strftime("%Y-%m-%d %H:%M UTC") if ts else "unknown"
         lines.append(f"• `{fn}` — last fetched {ts_str}")
     await interaction.response.send_message("\n".join(lines), ephemeral=True)
+
+# ── Right-click message editor ("Edit with Helper") ─────────────────────────────
+
+class _FileEditSelect(discord.ui.Select):
+    """Dropdown of repo embed files; applies the chosen one to a target message."""
+
+    def __init__(self, target: discord.Message, files: list[str]) -> None:
+        self.target = target
+        options = [discord.SelectOption(label=f[:100], value=f[:100]) for f in files[:25]]
+        super().__init__(
+            placeholder="Choose an embed file to apply…",
+            min_values=1, max_values=1, options=options,
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer(ephemeral=True)
+        fn = self.values[0]
+        try:
+            data = await get_file_fresh(fn)
+        except json.JSONDecodeError as exc:
+            await interaction.followup.send(f"JSON error in `{fn}`: {exc}", ephemeral=True)
+            return
+        except Exception as exc:
+            await interaction.followup.send(f"Failed to load `{fn}`: {exc}", ephemeral=True)
+            return
+
+        msg_block, buttons = extract_message_payload(data)
+        embeds = build_embeds(msg_block)
+        content = msg_block.get("content") or None
+        if not content and not embeds:
+            await interaction.followup.send(f"`{fn}` has no content or embeds.", ephemeral=True)
+            return
+
+        edit_kw: dict = dict(content=content, embeds=embeds)
+        view = build_view(buttons)
+        if view is not None:
+            edit_kw["view"] = view
+        try:
+            await self.target.edit(**edit_kw)
+        except discord.Forbidden:
+            await interaction.followup.send("I can't edit that message.", ephemeral=True)
+            return
+        except Exception as exc:
+            await interaction.followup.send(f"Edit failed: {exc}", ephemeral=True)
+            return
+        await interaction.followup.send(
+            f"✅ Edited with `{fn}`. [Jump to message]({self.target.jump_url})", ephemeral=True
+        )
+
+
+class _FileEditView(discord.ui.View):
+    def __init__(self, target: discord.Message, files: list[str]) -> None:
+        super().__init__(timeout=120)
+        self.add_item(_FileEditSelect(target, files))
+
+
+@bot.tree.context_menu(name="Edit with Helper")
+async def edit_with_helper(interaction: discord.Interaction, message: discord.Message) -> None:
+    if bot.user is None or message.author.id != bot.user.id:
+        await interaction.response.send_message(
+            "I can only edit messages **I** sent.", ephemeral=True
+        )
+        return
+    files = await _get_embed_list()
+    if not files:
+        await interaction.response.send_message(
+            "No embed files found in the repo.", ephemeral=True
+        )
+        return
+    note = "" if len(files) <= 25 else f"\n-# Showing first 25 of {len(files)} files."
+    await interaction.response.send_message(
+        f"Pick an embed file to apply to [that message]({message.jump_url}):{note}",
+        view=_FileEditView(message, files),
+        ephemeral=True,
+    )
 
 # ── Entry point ────────────────────────────────────────────────────────────────
 
