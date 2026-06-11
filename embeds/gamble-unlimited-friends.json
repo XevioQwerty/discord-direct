@@ -32,6 +32,11 @@
             "inline": false
           },
           {
+            "name": "🌐 Play Online Together (Online-Fix)",
+            "value": "Online-Fix multiplayer is its own P2P network — **everyone in the lobby must run the same fix, including people who own the game.**\n\n1. Download → [**Online-Fix .zip**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/online-fix/gamble-with-friends-online-fix.zip)\n2. Grab the [**toggle script**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/online-fix/OnlineFix-Toggle.bat), put it in your game folder, make an `_OnlineFix` subfolder and extract the zip into it.\n3. Run the script → press **S** → it makes **(Online Fix)** & **(Normal)** desktop shortcuts.\n-# Owners: launch with **(Online Fix)** to play with everyone, **(Normal)** for real Steam.",
+            "inline": false
+          },
+          {
             "name": "🔧 What the Mod Does",
             "value": "- Raises lobby size **6 → 12 players**\n- Patches Steam lobby + Mirror networking limits\n- Updates internal max-player settings\n- Scales starting money on new saves\n- Fixes the spawn-box soft-lock\n- Adds log messages so you can confirm it's working",
             "inline": false
