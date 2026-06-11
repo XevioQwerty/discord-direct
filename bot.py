@@ -36,8 +36,13 @@ def _github_url(filename: str) -> str:
 
 
 async def _fetch_github(filename: str) -> dict:
+    # Cache-bust the raw.githubusercontent CDN (which caches `main` for ~5 min),
+    # otherwise a freshly-pushed change can take minutes to appear via /update.
+    cb = int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp())
+    url = f"{_github_url(filename)}?_cb={cb}"
+    headers = {"Cache-Control": "no-cache", "Pragma": "no-cache"}
     async with aiohttp.ClientSession() as session:
-        async with session.get(_github_url(filename)) as resp:
+        async with session.get(url, headers=headers) as resp:
             if resp.status != 200:
                 raise RuntimeError(f"HTTP {resp.status} fetching `{filename}`")
             text = await resp.text()
