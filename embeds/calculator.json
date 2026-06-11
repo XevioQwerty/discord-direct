@@ -1,0 +1,46 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "➕ HD Picture Viewer — TI-84 Plus CE",
+        "description": "View full-color HD images on a **TI-84 Plus CE** or **TI-84 Plus CE Python**.\n\n**You'll need:** the calculator · a Windows/Mac/Linux PC · a USB cable.",
+        "color": 3447003,
+        "fields": [
+          {
+            "name": "📥 Step 1 — Download",
+            "value": "- **[TI Connect CE](https://education.ti.com/en/products/computer-software/ti-connect-ce-sw)** — the transfer software.\n- **[CE C/C++ Libraries](https://github.com/CE-Programming/libraries/releases/tag/v13.0)** — get `clibs.8xg`. *(ChromeOS: grab `clibs_separately_in_zip.zip` and extract.)*\n- **[arTIfiCE Jailbreak](https://github.com/YvanTT/arTIfiCE/releases/tag/v2.1)** — get `ARTIC84C.8xp` (needed on OS 5.5+ to run ASM programs).\n- **[HD Picture Viewer](https://github.com/TheLastMillennial/HD-Picture-Viewer/releases)** — get `HDPICV.8xp` (+ optional sample pics).\n- *Optional* — [Picture Converter (Win)](https://github.com/TheLastMillennial/HDPictureViewerConverter2/releases) or [web converter](https://taricorp.gitlab.io/hdpictureconverter-rs/) to convert your own images.",
+            "inline": false
+          },
+          {
+            "name": "🔌 Step 2 — Connect",
+            "value": "Plug the calculator into your PC via USB, turn it on, and open **TI Connect CE** — it should detect the calculator automatically.",
+            "inline": false
+          },
+          {
+            "name": "📂 Step 3 — Transfer Files",
+            "value": "In TI Connect CE, open **Calculator Explorer**, then drag-and-drop each file onto the calculator:\n1. `clibs.8xg` *(ChromeOS: send each extracted file individually)*\n2. `ARTIC84C.8xp`\n3. `HDPICV.8xp` (lands in archive memory)\n4. *(Optional)* picture files — usually `.8xv`",
+            "inline": false
+          },
+          {
+            "name": "🔓 Step 4 — Jailbreak (OS 5.5+ only)",
+            "value": "Check your OS: `[2nd]` + `[+]` (MEM) → `1: About`.\n\n**OS 5.5 / 5.6 / 5.7 / 5.8:**\n1. Disconnect from the PC.\n2. Press `[prgm]` → select **ARTIC84C** → `[enter]`.\n3. Follow the prompts. Re-run it after any calculator reset.\n\n**OS 5.4 or earlier:** skip this — ASM programs run natively.",
+            "inline": false
+          },
+          {
+            "name": "▶️ Step 5 — Run It",
+            "value": "**OS 5.5+:** run **ARTIC84C** first, then `[prgm]` → **HDPICV** → `[enter]`.\n**OS 5.4 or earlier:** just `[prgm]` → **HDPICV** → `[enter]`.",
+            "inline": false
+          },
+          {
+            "name": "🎮 Controls",
+            "value": "**Menu:** `[Enter]` open · `[↑]`/`[↓]` browse · `[Clear]` quit · `[Mode]` help\n**Fullscreen:** `[Clear]` back · `[Y=]`/`[Graph]` prev/next · arrows pan · `[+]`/`[-]` zoom · `[Zoom]` max zoom · `[Window]` reset · `[Del]` delete pic",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "TI-84 Plus CE • HD Picture Viewer Guide"
+        }
+      }
+    ]
+  }
+}
