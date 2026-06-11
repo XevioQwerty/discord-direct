@@ -36,17 +36,35 @@ def _github_url(filename: str) -> str:
 
 
 async def _fetch_github(filename: str) -> dict:
-    # Cache-bust the raw.githubusercontent CDN (which caches `main` for ~5 min),
-    # otherwise a freshly-pushed change can take minutes to appear via /update.
-    cb = int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp())
-    url = f"{_github_url(filename)}?_cb={cb}"
-    headers = {"Cache-Control": "no-cache", "Pragma": "no-cache"}
+    """Fetch an embed file fresh.
+
+    Uses the GitHub Contents API, which reflects a push within seconds. The raw
+    CDN (raw.githubusercontent.com) caches `main` for ~5 min and ignores query-
+    string cache-busters, so a freshly-pushed change would otherwise take minutes
+    to appear via /update. Falls back to the raw CDN only if the API fails
+    (e.g. rate-limited).
+    """
+    api_url = (
+        f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}"
+        f"/contents/embeds/{filename}?ref={GITHUB_BRANCH}"
+    )
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as resp:
+        async with session.get(api_url, headers={"Accept": "application/vnd.github.raw"}) as resp:
+            if resp.status == 200:
+                return json.loads(await resp.text())  # raises JSONDecodeError on bad JSON
+            api_status = resp.status
+
+        # Fallback: raw CDN with a cache-buster (best-effort freshness).
+        cb = int(datetime.datetime.now(tz=datetime.timezone.utc).timestamp())
+        async with session.get(
+            f"{_github_url(filename)}?_cb={cb}",
+            headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+        ) as resp:
             if resp.status != 200:
-                raise RuntimeError(f"HTTP {resp.status} fetching `{filename}`")
-            text = await resp.text()
-    return json.loads(text)  # raises JSONDecodeError on bad JSON
+                raise RuntimeError(
+                    f"HTTP {resp.status} (API returned {api_status}) fetching `{filename}`"
+                )
+            return json.loads(await resp.text())
 
 
 async def _list_github_embeds() -> list[str]:

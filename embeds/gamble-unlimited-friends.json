@@ -1,0 +1,56 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "🎲 Gamble with UNLIMITED Friends",
+        "description": "Raises the **Gamble With Your Friends** lobby cap from **6 → 12 players**, and fixes large-lobby issues (players stuck in the spawn box, low starting money on new saves).",
+        "color": 15844367,
+        "fields": [
+          {
+            "name": "✅ What You Need",
+            "value": "- **Gamble With Your Friends** on PC\n- **BepInEx 5.x**\n- The mod file: `TwelvePlayerExpansion.dll`",
+            "inline": false
+          },
+          {
+            "name": "📥 Step 1 — Install BepInEx",
+            "value": "Download [**BepInEx 5.x (win x64)**](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/BepInEx_win_x64_5.4.23.5.zip) and extract its contents into your **Gamble With Your Friends** game folder (the same folder as the game's `.exe`).",
+            "inline": false
+          },
+          {
+            "name": "▶️ Step 2 — Run the Game Once",
+            "value": "Launch the game normally, then close it. This lets BepInEx generate its folders — afterwards you should see a `BepInEx` folder in your game directory.",
+            "inline": false
+          },
+          {
+            "name": "📂 Step 3 — Install the Mod",
+            "value": "Download the mod → [**TwelvePlayerExpansion.dll**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/TwelvePlayerExpansion.dll)\n\nPlace it in:\n```\nGamble With Your Friends/BepInEx/plugins/\n```\nIf the `plugins` folder doesn't exist, create it.",
+            "inline": false
+          },
+          {
+            "name": "🎮 Step 4 — Launch & Verify",
+            "value": "Start the game. If the mod loaded, the BepInEx console/log shows:\n```\n12-Player Expansion: Parent Hook Applied\n```",
+            "inline": false
+          },
+          {
+            "name": "🔧 What the Mod Does",
+            "value": "- Raises lobby size **6 → 12 players**\n- Patches Steam lobby + Mirror networking limits\n- Updates internal max-player settings\n- Scales starting money on new saves\n- Fixes the spawn-box soft-lock\n- Adds log messages so you can confirm it's working",
+            "inline": false
+          },
+          {
+            "name": "👥 Important Notes",
+            "value": "The limit is mainly enforced by the **host**, but for best results **everyone should install the mod** — it avoids lobby/networking bugs in bigger groups.",
+            "inline": false
+          },
+          {
+            "name": "❌ If It Doesn't Work",
+            "value": "1. BepInEx is in the correct game folder.\n2. You ran the game once after installing BepInEx.\n3. The DLL is inside `BepInEx/plugins/`.\n4. The file is named exactly `TwelvePlayerExpansion.dll`.\n5. The log shows `12-Player Expansion: Parent Hook Applied`.\n-# No log line = the mod didn't load.",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "Gamble with Unlimited Friends • 12-Player Mod"
+        }
+      }
+    ]
+  }
+}
