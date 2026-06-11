@@ -27,8 +27,8 @@
             "inline": false
           },
           {
-            "name": "📎 Files (attached in this thread)",
-            "value": "- `Engine.ini` — **VRR** & **No-VRR** versions\n- `lego_batman_unlocks.zip` — gold set / promo unlocks",
+            "name": "📎 Downloads",
+            "value": "- [**Engine.ini — No-VRR**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/LEGO_Batman_Engine_No_VRR.zip)\n- [**Engine.ini — VRR**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/LEGO_Batman_Engine_VRR.zip)\n- [**Gold Set / Promo Unlocks**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/lego_batman_unlocks.zip)",
             "inline": false
           }
         ],
