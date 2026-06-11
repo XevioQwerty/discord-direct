@@ -11,3 +11,7 @@ discogoon.service
 __pycache__/
 *.pyc
 venv/
+
+# Channel/thread dumps (contain raw guide links, passwords, attachment URLs)
+guides_dump.json
+guides_dump.md
