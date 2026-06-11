@@ -1,40 +1,76 @@
 {
   "message": {
-    "content": "📚 **Guides Directory** — your hub for every thread guide and resource. Bookmark this message for quick access.",
+    "content": "📚 **Guides Directory** — your one-stop hub for every tutorial, setup guide, and resource on the server. Bookmark this message for quick access.",
     "embeds": [
       {
         "title": "📚 Guides Directory",
-        "description": "Everything you need, organized in one place. Jump straight to a thread below.\n​",
+        "description": "Everything you need, organized in one place. Jump straight to any guide below — or use the buttons at the bottom for our featured picks.\n​",
         "color": 15844367,
         "author": {
           "name": "Server Guides Hub"
         },
         "fields": [
           {
-            "name": "🎮 Featured Thread Guides",
-            "value": "- [PLAY SWITCH GAMES](https://discord.com/channels/976680631012589610/1102946725431345222) — Play Mario Kart and other Switch titles with friends on PC.\n- [PLAY PS3 GAMES](https://discord.com/channels/976680631012589610/1102946464893780029) — Skate 3 and other PS3 games on PC.\n- [PLAY MODDED ROUNDS](https://discord.com/channels/976680631012589610/1271075945947598869) — Revert ROUNDS and use Thunderstore mods.\n- [SIDELOAD ON IOS 18+](https://discord.com/channels/976680631012589610/1206485025441325086) — Install premium apps and tweaks on iOS 18+.",
+            "name": "⭐ Featured & Newest",
+            "value": "- 🏁 **[Forza Horizon 6 — FREE + DLC + Online](https://discord.com/channels/976680631012589610/1506914849391644703)** — Full repack install + online multiplayer setup.\n- 🦇 **[LEGO® Batman™: Legacy of the Dark Knight \\[CRACKED\\]](https://discord.com/channels/976680631012589610/1511316991561170974)** — Download, gold-set unlocks & performance fix.\n- 🎲 **[Gamble with UNLIMITED Friends](https://discord.com/channels/976680631012589610/1512185857724121338)** — Mod that raises lobbies from 6 → 12 players.\n- 🍎 **[iOS Sideload (iOS 17+)](https://discord.com/channels/976680631012589610/1206485025441325086)** — Install premium apps & tweaks, no jailbreak.\n​",
             "inline": false
           },
           {
-            "name": "​",
-            "value": "- [MAKE YOUR OWN MC SERVER](https://discord.com/channels/976680631012589610/1095876056231190609) — Host Minecraft servers and learn setup options.\n- [PLAY SKATE 3 ONLINE](https://discord.com/channels/976680631012589610/1409579838133637250) — Emulate Skate 3 with RPCS3 and play online.\n- [GTA V MODDING](https://discord.com/channels/976680631012589610/1420920577727924176) — Undetected free mod menu guide.\n- [CALCULATOR MOD](https://discord.com/channels/976680631012589610/1431717085322678412) — Install calculator mods and related tools.",
+            "name": "🎮 Gaming & Emulation",
+            "value": "- [Switch Emulator](https://discord.com/channels/976680631012589610/1102946725431345222) — Ryujinx & Yuzu setup to play Switch titles on PC.\n- [RPCS3 — Play PS3 Games](https://discord.com/channels/976680631012589610/1102946464893780029) — Emulate & play PS3 games online.\n- [Skate 3 Online](https://discord.com/channels/976680631012589610/1409579838133637250) — Full RPCS3 online multiplayer setup.\n- [Make Your Own MC Server](https://discord.com/channels/976680631012589610/1095876056231190609) — Host your own Minecraft server.\n- [Concurrent Steamshare](https://discord.com/channels/976680631012589610/1095875714596745276) — Play a shared Steam library at the same time.",
+            "inline": false
+          },
+          {
+            "name": "🛠️ Modding & Cheats",
+            "value": "- [GTA V Modding](https://discord.com/channels/976680631012589610/1420920577727922176) — Undetected mod menu, RP / stats / money guide.\n- [Modded ROUNDS](https://discord.com/channels/976680631012589610/1271075945947598869) — Thunderstore mods & profile import.\n- [Calculator Mods (TI-84)](https://discord.com/channels/976680631012589610/1431717085322678412) — HD Picture Viewer install + jailbreak.",
+            "inline": false
+          },
+          {
+            "name": "💻 System & Utilities",
+            "value": "- [Mac Spoof](https://discord.com/channels/976680631012589610/1095875817592082452) — Change your network MAC address.\n- [Clean Desktop Icons](https://discord.com/channels/976680631012589610/1095875429329539162) — Get a clean, minimal desktop setup.\n- [Bypass MEGA Download Limits](https://discord.com/channels/976680631012589610/1095875312467837001) — Beat MEGA quotas with MegaBasterd.",
             "inline": false
           },
           {
             "name": "🌐 External Resources",
-            "value": "- [EMULATOR / ROM ARCHIVE](https://vimm.net/vault) — Trusted archive for retro emulators and ROMs.",
-            "inline": false
-          },
-          {
-            "name": "✨ Extra Guides",
-            "value": "- [LEGO® Batman™: Legacy of the Dark Knight \\[CRACKED\\]](https://canary.discord.com/channels/976680631012589610/1511316991561170974)\n- [Gamble with UNLIMITED Friends — Mod Install Guide](https://discord.com/channels/976680631012589610/1512185857724121338)",
+            "value": "- [Emulator / ROM Archive](https://vimm.net/vault) — Trusted archive for retro emulators and ROMs.",
             "inline": false
           }
         ],
         "footer": {
-          "text": "Central directory for all guides • Keep this handy"
+          "text": "Central directory for all guides • Keep this handy • Updated regularly"
         }
       }
     ]
-  }
+  },
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🏁 Forza Horizon 6",
+          "url": "https://discord.com/channels/976680631012589610/1506914849391644703"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🦇 LEGO Batman",
+          "url": "https://discord.com/channels/976680631012589610/1511316991561170974"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🎲 Gamble Mod",
+          "url": "https://discord.com/channels/976680631012589610/1512185857724121338"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🍎 iOS Sideload",
+          "url": "https://discord.com/channels/976680631012589610/1206485025441325086"
+        }
+      ]
+    }
+  ]
 }

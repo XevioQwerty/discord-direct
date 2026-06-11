@@ -114,7 +114,7 @@ def build_embeds(msg_block: dict) -> list[discord.Embed]:
             )
         if footer := e.get("footer"):
             embed.set_footer(
-                name=footer.get("text") or "",
+                text=footer.get("text") or "",
                 icon_url=footer.get("icon_url"),
             )
         if thumb := e.get("thumbnail"):
