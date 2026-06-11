@@ -1,0 +1,36 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "🎮 Nintendo Switch Emulators",
+        "description": "Play Switch games on PC. The original **Ryujinx** and **Yuzu** were discontinued in 2024 — these are the actively-maintained community forks to use in 2026.",
+        "color": 15548997,
+        "fields": [
+          {
+            "name": "✅ Ryubing  —  Best for PC  ·  Recommended",
+            "value": "Carries on the Ryujinx lineage — rock-solid **accuracy & stability** with fewer graphical glitches. Includes self-hosted **LDN** so you can join public or password-protected local-wireless lobbies.\n**Platforms:** Windows · Linux · macOS\n➜ [**Download**](https://ryujinx.app/)  ·  [GitHub](https://github.com/Ryubing)",
+            "inline": false
+          },
+          {
+            "name": "🌙 Eden  —  Best All-Rounder",
+            "value": "The most actively-developed Yuzu-based fork. Excellent **performance** and the widest game compatibility — Android-first, but runs great on PC too.\n**Platforms:** Windows · Linux · Android\n➜ [**Download**](https://git.eden-emu.dev/eden-emu/eden/releases)",
+            "inline": false
+          },
+          {
+            "name": "🐱 Citron  —  Simple & Cross-Platform",
+            "value": "Works well on both PC and phone with an easy setup and a built-in mod downloader. A safe one-emulator-does-everything pick.\n**Platforms:** Windows · Linux · Android\n➜ [**Download**](https://citron-emu.org/)",
+            "inline": false
+          },
+          {
+            "name": "📋 Before You Start",
+            "value": "Every Switch emulator needs **firmware** + **`prod.keys`** dumped from a Switch you own, plus your own game dumps. Follow each emulator's setup guide for the exact steps.",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "Switch Emulator Guide • Updated June 2026"
+        }
+      }
+    ]
+  }
+}
