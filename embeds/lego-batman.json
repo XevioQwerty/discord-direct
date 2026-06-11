@@ -1,0 +1,41 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "🦇 LEGO® Batman: Legacy of the Dark Knight",
+        "description": "Cracked install + gold-set unlocks and a performance fix.\n**[📥 FitGirl Repack Download](https://fitgirl-repacks.site/lego-batman-legacy-of-the-dark-knight/)**",
+        "color": 16766720,
+        "fields": [
+          {
+            "name": "🎮 Unlock Gold Set + Performance Fix",
+            "value": "1. Move spiritovod's `.pak`, `.ucas`, `.utoc` files into `...\\LEGOBatmanLotDK\\Content\\Paks\\~mods\\`\n2. Clear server cache — `Win+R` → `%localappdata%\\Dinner\\Saved\\PersistentDownloadDir\\WBASDK\\Save\\` → **delete** `f09e73ec2b99e39e30b4252f497ef32b`\n3. Launch from `...\\Binaries\\Win64\\LEGOBatmanLotDK-Win64-Shipping.exe` — **not** the main shortcut.\n4. In-game: **Main Menu → Redeem Code** (codes below).",
+            "inline": false
+          },
+          {
+            "name": "🔑 Redeem Codes",
+            "value": "`00000001` — The Batman (Gold) Batmobile\n`00000002` — Batman & Robin (Gold) Batmobile\n`00000003` — Batman v Superman (Gold) Batmobile\n`00000007` — Golden Knight Suit\n`00000017` — Golden Red Brick\n-# Codes `00000004`–`00000016` unlock Twitch drops / props.",
+            "inline": false
+          },
+          {
+            "name": "⚙️ Optional — Engine.ini Optimization",
+            "value": "**VRR vs No-VRR:** if G-Sync/FreeSync is enabled in *both* your GPU control panel and monitor, use **VRR** — otherwise use **No-VRR**.\n\n1. Run the game once, then close it.\n2. `Win+R` → `%localappdata%\\Dinner\\Saved\\Config\\Windows`\n3. Overwrite **Engine.ini** with your chosen version (attached).\n4. Right-click `Engine.ini` → **Properties** → check **Read-Only** → Apply.",
+            "inline": false
+          },
+          {
+            "name": "⚠️ Notes",
+            "value": "- Keep mod files in `~mods` or your save data may corrupt.\n- **Don't combine with other optimization mods.**\n- To uninstall: delete the modded `Engine.ini`.",
+            "inline": false
+          },
+          {
+            "name": "📎 Files (attached in this thread)",
+            "value": "- `Engine.ini` — **VRR** & **No-VRR** versions\n- `lego_batman_unlocks.zip` — gold set / promo unlocks",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "LEGO Batman: Legacy of the Dark Knight Guide"
+        }
+      }
+    ]
+  }
+}
