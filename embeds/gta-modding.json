@@ -1,0 +1,51 @@
+{
+  "message": {
+    "embeds": [
+      {
+        "title": "🔫 GTA V Online — Modding Guide",
+        "description": "Mod menus, RP / stats / money editing, and injection — for **GTA V Enhanced**.\n⚠️ -# Modding online breaks Rockstar's ToS and can get accounts banned. Use an **alt account** and proceed at your own risk.",
+        "color": 5763719,
+        "fields": [
+          {
+            "name": "📥 Downloads",
+            "value": "- [**Mod Menu / Injector**](https://drive.google.com/file/d/11yl9tR9ZhDpySnmQOzsax0XHR1AzP-ox/view?usp=sharing) — password: `cheat`\n- [**Full Story Mode Saves**](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/GTAVFULLSAVE.rar)",
+            "inline": false
+          },
+          {
+            "name": "🎮 How to Inject (YimMenu)",
+            "value": "1. Rockstar Launcher → **GTA V Enhanced** → Settings → **disable BattlEye**. On Steam/Epic you may also need the `-nobattleye` launch parameter.\n2. Launch GTA V, then inject **`YimMenuV2.dll`** at the main menu.\n3. Play modded on YimMenu, or relaunch for vanilla.\n-# ⚠️ Before going vanilla: **close Xenos and launch WITH BattlEye.**",
+            "inline": false
+          },
+          {
+            "name": "🟢 RP Level  ·  Safe",
+            "value": "**Recovery → Stat Editor**\nName: `MPX_CHAR_SET_RP_GIFT_ADMIN` — replace **X** with your slot (`MP0` = 1st char, `MP1` = 2nd).\nEnter the **RP number** (not the level) — look it up at [gtaoxp](https://gtaoxp.github.io/) — then click **Write**.",
+            "inline": false
+          },
+          {
+            "name": "🟢 Stats  ·  Safe",
+            "value": "**Recovery → Stat Editor** — set each to **100**:\n`MPX_SCRIPT_INCREASE_STAM` — Stamina\n`MPX_SCRIPT_INCREASE_SHO` — Shooting\n`MPX_SCRIPT_INCREASE_STL` — Stealth\n`MPX_SCRIPT_INCREASE_STRN` — Strength\n`MPX_SCRIPT_INCREASE_LUNG` — Lung capacity\n`MPX_SCRIPT_INCREASE_DRIV` — Driving\n`MPX_SCRIPT_INCREASE_FLY` — Flying",
+            "inline": false
+          },
+          {
+            "name": "🟢 Outfits  ·  Safe",
+            "value": "Outfit codes → [bbfas.com/cc](https://www.bbfas.com/cc/)",
+            "inline": false
+          },
+          {
+            "name": "🟡 Money  ·  Risky",
+            "value": "**Recovery → Transactions**\nType: **SERVICE**  ·  Category: **SERVICE_WTIH_THRESHOLD**  ·  Action: **EARN**\nItem: `SERVICE_EARN_JOB_BONUS`\nPrice: `15000000` — going higher is riskier.",
+            "inline": false
+          },
+          {
+            "name": "🔁 Get Un-Banned (Epic Games)",
+            "value": "Submit a [Rockstar support ticket](https://support.rockstargames.com/request/account/account-settings/linking-unlinking-accounts) to unlink Epic:\n```\nI'd like to unlink my Epic Games account as soon as possible. I understand this will lose my online progress. Epic ID: <your id>. I confirm — please do not ask for further confirmation.\n```\n-# Attach a screenshot of your Epic account page with the Epic ID visible.",
+            "inline": false
+          }
+        ],
+        "footer": {
+          "text": "GTA V Online Modding Guide"
+        }
+      }
+    ]
+  }
+}
