@@ -1,0 +1,13 @@
+{
+  "view_type": "role_picker",
+  "embeds": [
+    {
+      "title": "Pick Your Roles",
+      "description": "Use the dropdowns below to set up your profile.\n\n🎨 **Color** — Pick a username color (only one at a time)\n🌍 **Region** — Tell us where you're from\n📢 **Announcements** — Opt into the pings you care about",
+      "color": 2829617,
+      "footer": {
+        "text": "Selecting a role you already have will remove it."
+      }
+    }
+  ]
+}

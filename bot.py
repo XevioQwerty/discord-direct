@@ -192,6 +192,156 @@ def build_embeds(msg_block: dict) -> list[discord.Embed]:
         result.append(embed)
     return result
 
+# ── Role picker constants ──────────────────────────────────────────────────────
+
+COLOR_ROLES: dict[str, int] = {
+    "Orange": 1100670573207638128,
+    "Yellow": 1100670707668631552,
+    "Navy":   1100670211448918086,
+    "Lime":   1100670815734866002,
+    "Green":  1100671139518357585,
+    "Red":    1100670392571543624,
+    "Blue":   1100671251464343592,
+    "Teal":   1100670052719657000,
+    "Purple": 1100671367088705567,
+}
+COLOR_ROLE_IDS = set(COLOR_ROLES.values())
+
+REGION_ROLES: dict[str, int] = {
+    "N.America": 1100662863527432253,
+    "S.America": 1100663436834263122,
+    "Europe":    1100663529385762816,
+    "Africa":    1100663648826966056,
+    "Asia":      1100663938649182229,
+    "Oceania":   1100664003572813925,
+}
+REGION_ROLE_IDS = set(REGION_ROLES.values())
+
+ANNOUNCEMENT_ROLES: dict[str, int] = {
+    "General Announcements": 1299815962362642497,
+    "New Stuff":             1336081085817290802,
+    "Free Games":            1299817922763554908,
+}
+ANNOUNCEMENT_ROLE_IDS = set(ANNOUNCEMENT_ROLES.values())
+
+
+class ColorSelect(discord.ui.Select):
+    def __init__(self) -> None:
+        super().__init__(
+            custom_id="roles:color",
+            placeholder="🎨 Pick a color…",
+            min_values=0,
+            max_values=1,
+            options=[discord.SelectOption(label=name, value=str(rid)) for name, rid in COLOR_ROLES.items()],
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer(ephemeral=True)
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            await interaction.followup.send("Could not resolve your server membership.", ephemeral=True)
+            return
+        current_colors = [r for r in member.roles if r.id in COLOR_ROLE_IDS]
+        if not self.values:
+            if current_colors:
+                await member.remove_roles(*current_colors, reason="Role picker: removed color")
+            await interaction.followup.send("Color role removed.", ephemeral=True)
+            return
+        selected_id = int(self.values[0])
+        new_role = interaction.guild.get_role(selected_id)  # type: ignore[union-attr]
+        if selected_id in {r.id for r in member.roles}:
+            await member.remove_roles(*current_colors, reason="Role picker: toggled off color")
+            await interaction.followup.send("Color role removed.", ephemeral=True)
+            return
+        await member.remove_roles(*current_colors, reason="Role picker: color swap")
+        if new_role:
+            await member.add_roles(new_role, reason="Role picker: color assigned")
+        name = next(k for k, v in COLOR_ROLES.items() if v == selected_id)
+        await interaction.followup.send(f"Color set to **{name}**.", ephemeral=True)
+
+
+class RegionSelect(discord.ui.Select):
+    def __init__(self) -> None:
+        super().__init__(
+            custom_id="roles:region",
+            placeholder="🌍 Pick your region…",
+            min_values=0,
+            max_values=1,
+            options=[discord.SelectOption(label=name, value=str(rid)) for name, rid in REGION_ROLES.items()],
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer(ephemeral=True)
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            await interaction.followup.send("Could not resolve your server membership.", ephemeral=True)
+            return
+        current_regions = [r for r in member.roles if r.id in REGION_ROLE_IDS]
+        if not self.values:
+            if current_regions:
+                await member.remove_roles(*current_regions, reason="Role picker: removed region")
+            await interaction.followup.send("Region role removed.", ephemeral=True)
+            return
+        selected_id = int(self.values[0])
+        new_role = interaction.guild.get_role(selected_id)  # type: ignore[union-attr]
+        if selected_id in {r.id for r in member.roles}:
+            await member.remove_roles(*current_regions, reason="Role picker: toggled off region")
+            await interaction.followup.send("Region role removed.", ephemeral=True)
+            return
+        await member.remove_roles(*current_regions, reason="Role picker: region swap")
+        if new_role:
+            await member.add_roles(new_role, reason="Role picker: region assigned")
+        name = next(k for k, v in REGION_ROLES.items() if v == selected_id)
+        await interaction.followup.send(f"Region set to **{name}**.", ephemeral=True)
+
+
+class AnnouncementsSelect(discord.ui.Select):
+    def __init__(self) -> None:
+        super().__init__(
+            custom_id="roles:announcements",
+            placeholder="📢 Opt into announcements…",
+            min_values=0,
+            max_values=len(ANNOUNCEMENT_ROLES),
+            options=[discord.SelectOption(label=name, value=str(rid)) for name, rid in ANNOUNCEMENT_ROLES.items()],
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer(ephemeral=True)
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            await interaction.followup.send("Could not resolve your server membership.", ephemeral=True)
+            return
+        guild = interaction.guild  # type: ignore[union-attr]
+        selected_ids = {int(v) for v in self.values}
+        to_add, to_remove = [], []
+        for rid in ANNOUNCEMENT_ROLE_IDS:
+            role = guild.get_role(rid)
+            if not role:
+                continue
+            has_it = rid in {r.id for r in member.roles}
+            if rid in selected_ids and not has_it:
+                to_add.append(role)
+            elif rid not in selected_ids and has_it:
+                to_remove.append(role)
+        if to_add:
+            await member.add_roles(*to_add, reason="Role picker: announcement opt-in")
+        if to_remove:
+            await member.remove_roles(*to_remove, reason="Role picker: announcement opt-out")
+        if selected_ids:
+            names = [k for k, v in ANNOUNCEMENT_ROLES.items() if v in selected_ids]
+            await interaction.followup.send(f"Announcements updated: **{', '.join(names)}**", ephemeral=True)
+        else:
+            await interaction.followup.send("Opted out of all announcements.", ephemeral=True)
+
+
+class RolePickerView(discord.ui.View):
+    def __init__(self) -> None:
+        super().__init__(timeout=None)
+        self.add_item(ColorSelect())
+        self.add_item(RegionSelect())
+        self.add_item(AnnouncementsSelect())
+
+
 # ── Persistent button / view helpers ──────────────────────────────────────────
 
 _STYLES: dict[str, discord.ButtonStyle] = {
@@ -329,6 +479,14 @@ def build_view(buttons: list[dict]) -> discord.ui.View | None:
     return view if view.children else None
 
 
+def get_special_view(data: dict) -> discord.ui.View | None:
+    """Return a special persistent view if `view_type` is set in the data."""
+    vt = data.get("view_type") or (data.get("message") or {}).get("view_type")
+    if vt == "role_picker":
+        return RolePickerView()
+    return None
+
+
 def extract_message_payload(data: dict) -> tuple[dict, list[dict]]:
     """
     Extracts the displayable message block and button references.
@@ -372,6 +530,8 @@ class DiscoGoon(commands.Bot):
             for btn in buttons:
                 if eph := btn.get("ephemeral"):
                     _ensure_registered(eph)
+        # Role picker is always registered — its custom_ids are stable
+        self.add_view(RolePickerView())
         # Sync global slash commands
         await self.tree.sync()
 
@@ -449,7 +609,7 @@ async def cmd_send(
     msg_block, buttons = extract_message_payload(data)
     embeds = build_embeds(msg_block)
     content = msg_block.get("content") or None
-    view = build_view(buttons)
+    view = get_special_view(data) or build_view(buttons)
 
     # Prevent sending empty payloads to avoid 400 Bad Request error
     if not content and not embeds:
@@ -544,8 +704,10 @@ async def cmd_edit(
         mb, buttons_list = extract_message_payload(fdata)
         edit_kw["content"] = mb.get("content") or None
         edit_kw["embeds"]  = build_embeds(mb)
-        # Automatically updates buttons too if present in the main payload
-        if buttons_list:
+        special = get_special_view(fdata)
+        if special:
+            edit_kw["view"] = special
+        elif buttons_list:
             edit_kw["view"] = build_view(buttons_list)
 
     if buttons:
