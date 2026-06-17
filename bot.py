@@ -224,6 +224,16 @@ ANNOUNCEMENT_ROLES: dict[str, int] = {
 }
 ANNOUNCEMENT_ROLE_IDS = set(ANNOUNCEMENT_ROLES.values())
 
+PLATFORM_ROLES: dict[str, int] = {
+    "PC":          1515972633173295104,
+    "Xbox":        1515975013788811345,
+    "PlayStation": 1515975014329876583,
+    "Switch":      1515975014820614245,
+}
+PLATFORM_ROLE_IDS = set(PLATFORM_ROLES.values())
+
+MEMBER_ROLE_ID = 995288435071909919
+
 
 class ColorSelect(discord.ui.Select):
     def __init__(self) -> None:
@@ -334,12 +344,77 @@ class AnnouncementsSelect(discord.ui.Select):
             await interaction.followup.send("Opted out of all announcements.", ephemeral=True)
 
 
+class PlatformSelect(discord.ui.Select):
+    def __init__(self) -> None:
+        super().__init__(
+            custom_id="roles:platform",
+            placeholder="🖥️ Pick your platform(s)…",
+            min_values=0,
+            max_values=len(PLATFORM_ROLES),
+            options=[discord.SelectOption(label=name, value=str(rid)) for name, rid in PLATFORM_ROLES.items()],
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.defer(ephemeral=True)
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            await interaction.followup.send("Could not resolve your server membership.", ephemeral=True)
+            return
+        guild = interaction.guild  # type: ignore[union-attr]
+        selected_ids = {int(v) for v in self.values}
+        to_add, to_remove = [], []
+        for rid in PLATFORM_ROLE_IDS:
+            role = guild.get_role(rid)
+            if not role:
+                continue
+            has_it = rid in {r.id for r in member.roles}
+            if rid in selected_ids and not has_it:
+                to_add.append(role)
+            elif rid not in selected_ids and has_it:
+                to_remove.append(role)
+        if to_add:
+            await member.add_roles(*to_add, reason="Role picker: platform opt-in")
+        if to_remove:
+            await member.remove_roles(*to_remove, reason="Role picker: platform opt-out")
+        if selected_ids:
+            names = [k for k, v in PLATFORM_ROLES.items() if v in selected_ids]
+            await interaction.followup.send(f"Platforms updated: **{', '.join(names)}**", ephemeral=True)
+        else:
+            await interaction.followup.send("Platform roles removed.", ephemeral=True)
+
+
+class VerifyButton(discord.ui.Button):
+    def __init__(self) -> None:
+        super().__init__(
+            custom_id="verify:member",
+            label="✅  Verify",
+            style=discord.ButtonStyle.success,
+        )
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        member = interaction.user
+        if not isinstance(member, discord.Member):
+            await interaction.response.send_message("Could not resolve your server membership.", ephemeral=True)
+            return
+        if any(r.id == MEMBER_ROLE_ID for r in member.roles):
+            await interaction.response.send_message("You're already verified!", ephemeral=True)
+            return
+        role = interaction.guild.get_role(MEMBER_ROLE_ID)  # type: ignore[union-attr]
+        if not role:
+            await interaction.response.send_message("Member role not found — ping an admin.", ephemeral=True)
+            return
+        await member.add_roles(role, reason="Self-verify")
+        await interaction.response.send_message("✅ Verified! Welcome to the server.", ephemeral=True)
+
+
 class RolePickerView(discord.ui.View):
     def __init__(self) -> None:
         super().__init__(timeout=None)
         self.add_item(ColorSelect())
         self.add_item(RegionSelect())
         self.add_item(AnnouncementsSelect())
+        self.add_item(PlatformSelect())
+        self.add_item(VerifyButton())
 
 
 # ── Persistent button / view helpers ──────────────────────────────────────────

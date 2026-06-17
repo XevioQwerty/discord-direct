@@ -3,11 +3,30 @@
   "embeds": [
     {
       "title": "Pick Your Roles",
-      "description": "Use the dropdowns below to set up your profile.\n\n🎨 **Color** — Pick a username color (only one at a time)\n🌍 **Region** — Tell us where you're from\n📢 **Announcements** — Opt into the pings you care about",
+      "description": "Use the dropdowns below to set up your profile.\n\nSelecting a role you already have will remove it.",
       "color": 2829617,
-      "footer": {
-        "text": "Selecting a role you already have will remove it."
-      }
+      "fields": [
+        {
+          "name": "🎨 Colors",
+          "value": "<@&1100670392571543624> <@&1100670573207638128> <@&1100670707668631552> <@&1100670815734866002> <@&1100671139518357585> <@&1100670052719657000> <@&1100671251464343592> <@&1100670211448918086> <@&1100671367088705567>",
+          "inline": false
+        },
+        {
+          "name": "🌍 Region",
+          "value": "N.America · S.America · Europe · Africa · Asia · Oceania",
+          "inline": true
+        },
+        {
+          "name": "🖥️ Platform",
+          "value": "PC · Xbox · PlayStation · Switch",
+          "inline": true
+        },
+        {
+          "name": "📢 Announcements",
+          "value": "General · New Stuff · Free Games",
+          "inline": true
+        }
+      ]
     }
   ]
 }
