@@ -15,6 +15,12 @@
           "style": 1,
           "label": "🔄 Update Guide",
           "custom_id": "ephemeral:guides-fh6-update.json"
+        },
+        {
+          "type": 2,
+          "style": 1,
+          "label": "🌐 Latest Online",
+          "custom_id": "ephemeral:guides-fh6-online.json"
         }
       ]
     }
