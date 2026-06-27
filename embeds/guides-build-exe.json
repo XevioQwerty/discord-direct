@@ -1,0 +1,9 @@
+{
+  "embeds": [
+    {
+      "description": "## 🔨 BUILD THE .EXE FROM SOURCE\n\nTurn the FitGirl Link Extractor Python script into a standalone Windows `.exe` using **PyInstaller** — no Python install needed to run it.\n\n-# ─────────────────────────────────\n## Step 1 — Install dependencies\n\n```\npip install -r requirements.txt\npip install pyinstaller\n```\n\n-# ─────────────────────────────────\n## Step 2 — Build\n\nRun this in your project root:\n```\npyinstaller --onefile --windowed --name \"FitGirl-Link-Extractor\" main.py\n```\n\n- `--onefile` — bundles everything into a single `.exe`\n- `--windowed` — hides the console window (GUI app)\n- `--name` — sets the output filename\n\nReplace `main.py` with your actual entry file if it's named differently.\nThe finished `.exe` appears in the `dist/` folder.\n\n-# ─────────────────────────────────\n## Troubleshooting\n\n**Module missing at runtime** — add `--hidden-import` for anything PyInstaller misses:\n```\npyinstaller --onefile --windowed --hidden-import undetected_chromedriver --name \"FitGirl-Link-Extractor\" main.py\n```\n\n**Chrome driver** — `undetected_chromedriver` downloads Chrome driver on first run automatically. No bundling needed — it handles this at runtime inside the `.exe`.\n\n**Antivirus false positive** — PyInstaller `.exe` files are commonly flagged. Add the `dist/` folder to your AV exclusions before running it.\n\n**Weird build errors** — use `--clean` to clear the build cache:\n```\npyinstaller --clean --onefile --windowed --name \"FitGirl-Link-Extractor\" main.py\n```",
+      "color": 1752220,
+      "fields": []
+    }
+  ]
+}

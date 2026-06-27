@@ -1,0 +1,34 @@
+{
+  "embeds": [
+    {
+      "description": "# ⬇️ DOWNLOAD MANAGERS & TOOLS\n\n> **Read this before downloading FitGirl repacks or any large files.**\n\n-# ─────────────────────────────────\n## 🔗 FitGirl FF Link Extractor\n\nA GUI tool that **bypasses Cloudflare Turnstile** and pulls direct FuckingFast download links from FitGirl pages — paste them straight into JDownloader 2 or FDM.\n\n**This fork adds Zen + Chromium browser support.**\n\n**How to use:**\n1. Paste a FitGirl repack page URL into the tool.\n2. Use checkboxes to **exclude** files you don't need (bonus content, other language packs).\n3. Click **Extract Links** — an undetected browser resolves each FuckingFast URL automatically.\n4. Click **Copy to Clipboard** → paste directly into JDownloader 2 or FDM.\n\nDownload the `.exe` from GitHub Releases, or run from source (see **Build from Source** below).\n\n-# ─────────────────────────────────\n## 📥 JDownloader 2\n\n**[Download JDownloader 2](https://jdownloader.org/download/index)** — best for container links and multi-host pages.\n\n**Recommended settings** (Settings → Connection Manager → Default Connection):\n- **Max chunks per download:** `2`\n- **Max simultaneous downloads:** `4`\n\n**Adding links:** copy all URLs from the extractor → JDownloader auto-detects them from clipboard (bottom-right popup). Right-click the package → **Start Download** — not *Download All*.\n\n-# ─────────────────────────────────\n## ⬇️ Free Download Manager (FDM)\n\n**[Download FDM](https://www.freedownloadmanager.org/)** — free, no ads, great for direct HTTP links.\n\n1. Install the FDM desktop app.\n2. Install the **browser extension** (Chrome / Firefox / Edge) from the FDM site — it intercepts download links automatically when you click them in-browser, no copy-pasting needed.\n3. In FDM: **Options → General** → set max connections per server to `2`, max simultaneous downloads to `4`.\n\n**When to use which:**\n- **FDM + extension** — best when you already have direct links, or want one-click browser downloads.\n- **JDownloader** — better for container/multi-host pages (filecrypt.cc, `.dlc` files, multi-part archives).\n\n-# ─────────────────────────────────\n## ☁️ Cloudflare / FuckingFast Settings\n\nFuckingFast uses Cloudflare to throttle aggressive downloaders. These settings keep you under the radar:\n\n| Setting | Value | Why |\n|---|---|---|\n| Chunks per file | **2** | 4+ triggers rate-limiting |\n| Simultaneous downloads | **4** | Fast but not flagged |\n| Retry delay | auto | Don't spam retries |\n\n> Stuck at 0 B/s? **Pause all → wait 30s → resume.** Cloudflare rate-limits reset quickly.",
+      "color": 1752220,
+      "fields": []
+    }
+  ],
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 1,
+          "label": "💾 Game Backup Guide",
+          "custom_id": "ephemeral:guides-game-backup.json"
+        },
+        {
+          "type": 2,
+          "style": 1,
+          "label": "🔨 Build from Source",
+          "custom_id": "ephemeral:guides-build-exe.json"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "GitHub →",
+          "url": "https://github.com/XevioQwerty/fitgirl-ff-link-extractor"
+        }
+      ]
+    }
+  ]
+}
