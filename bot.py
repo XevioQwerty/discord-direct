@@ -554,6 +554,24 @@ def build_view(buttons: list[dict]) -> discord.ui.View | None:
     return view if view.children else None
 
 
+def extract_current_buttons(msg: discord.Message) -> list[dict]:
+    """Normalize a live message's components back into our buttons-list format."""
+    result: list[dict] = []
+    for row in msg.components:
+        for item in getattr(row, "children", []):
+            if not isinstance(item, discord.components.Button):
+                continue
+            cid = item.custom_id or ""
+            result.append({
+                "label": item.label or "Button",
+                "style": item.style.name if item.style else "primary",
+                "url": item.url,
+                "custom_id": cid,
+                "ephemeral": cid[len("ephemeral:"):] if cid.startswith("ephemeral:") else None,
+            })
+    return result
+
+
 def get_special_view(data: dict) -> discord.ui.View | None:
     """Return a special persistent view if `view_type` is set in the data."""
     vt = data.get("view_type") or (data.get("message") or {}).get("view_type")
@@ -719,18 +737,29 @@ async def cmd_send(
 @app_commands.describe(
     message_link="Full Discord message link",
     file="JSON file to replace message content/embeds (optional)",
-    buttons="JSON file whose components replace current buttons (optional)",
+    buttons="JSON file whose components REPLACE all current buttons (optional)",
+    add_buttons="JSON file whose components are ADDED alongside the current buttons (optional)",
+    remove_button="Label or custom_id substring — removes any current button that matches it (optional)",
 )
-@app_commands.autocomplete(file=_file_autocomplete, buttons=_file_autocomplete)
+@app_commands.autocomplete(file=_file_autocomplete, buttons=_file_autocomplete, add_buttons=_file_autocomplete)
 async def cmd_edit(
     interaction: discord.Interaction,
     message_link: str,
     file: str | None = None,
     buttons: str | None = None,
+    add_buttons: str | None = None,
+    remove_button: str | None = None,
 ) -> None:
-    if not file and not buttons:
+    if not any([file, buttons, add_buttons, remove_button]):
         await interaction.response.send_message(
-            "Provide at least one of `file` or `buttons`.", ephemeral=True
+            "Provide at least one of `file`, `buttons`, `add_buttons`, or `remove_button`.", ephemeral=True
+        )
+        return
+
+    if buttons and (add_buttons or remove_button):
+        await interaction.response.send_message(
+            "Use either `buttons` (full replace) or `add_buttons`/`remove_button` (incremental) — not both.",
+            ephemeral=True,
         )
         return
 
@@ -767,6 +796,8 @@ async def cmd_edit(
 
     edit_kw: dict = {}
 
+    base_buttons: list[dict] | None = None
+
     if file:
         try:
             fdata = await get_file(file)
@@ -784,6 +815,7 @@ async def cmd_edit(
             edit_kw["view"] = special
         elif buttons_list:
             edit_kw["view"] = build_view(buttons_list)
+            base_buttons = buttons_list
 
     if buttons:
         try:
@@ -797,6 +829,52 @@ async def cmd_edit(
         _, parsed_btns = extract_message_payload(bdata)
         edit_kw["view"] = build_view(parsed_btns)
 
+    button_summary = ""
+    if add_buttons or remove_button:
+        current = base_buttons if base_buttons is not None else extract_current_buttons(msg)
+        current = list(current)
+
+        removed = 0
+        if remove_button:
+            needle = remove_button.lower()
+            kept: list[dict] = []
+            for b in current:
+                haystack = f"{b.get('label', '')} {b.get('custom_id') or ''}".lower()
+                if needle in haystack:
+                    removed += 1
+                else:
+                    kept.append(b)
+            current = kept
+
+        added = 0
+        if add_buttons:
+            try:
+                adata = await get_file(add_buttons)
+            except json.JSONDecodeError as exc:
+                await interaction.followup.send(f"JSON parse error in `{add_buttons}`: {exc}", ephemeral=True)
+                return
+            except Exception as exc:
+                await interaction.followup.send(f"Failed to fetch `{add_buttons}`: {exc}", ephemeral=True)
+                return
+            _, new_btns = extract_message_payload(adata)
+            current.extend(new_btns)
+            added = len(new_btns)
+
+        if len(current) > 25:
+            await interaction.followup.send(
+                f"That would leave {len(current)} buttons — Discord allows a max of 25 on one message.",
+                ephemeral=True,
+            )
+            return
+
+        edit_kw["view"] = build_view(current)
+        parts = []
+        if remove_button:
+            parts.append(f"removed {removed}")
+        if add_buttons:
+            parts.append(f"added {added}")
+        button_summary = f" ({', '.join(parts)} button(s), {len(current)} total)"
+
     try:
         await msg.edit(**edit_kw)
     except discord.Forbidden:
@@ -806,7 +884,7 @@ async def cmd_edit(
         await interaction.followup.send(f"Edit failed: {exc}", ephemeral=True)
         return
 
-    await interaction.followup.send("Message updated.", ephemeral=True)
+    await interaction.followup.send(f"Message updated.{button_summary}", ephemeral=True)
 
 # ── /update ────────────────────────────────────────────────────────────────────
 
