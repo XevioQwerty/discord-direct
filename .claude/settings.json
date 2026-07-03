@@ -4,7 +4,8 @@
       "Bash(python3 -)",
       "Bash(git commit -m ' *)",
       "Bash(python3 -c ' *)",
-      "Bash(python3 -c \"import ast; ast.parse\\(open\\('bot.py'\\).read\\(\\)\\)\")"
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\('bot.py'\\).read\\(\\)\\)\")",
+      "Bash(git fetch *)"
     ]
   }
 }
