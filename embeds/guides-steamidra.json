@@ -1,0 +1,40 @@
+{
+  "embeds": [
+    {
+      "description": "# 🎮 STEAMIDRA — GAME FIX & DOWNLOAD SETUP\n\n**LumaCore · Auto Online-Fix · DDMod Direct Downloads**\n\n> Full walkthrough for installing SteaMidra, fixing DRM/online issues on games, and downloading through it safely.\n\n-# ─────────────────────────────────\n## 1️⃣ Windows Defender — Pre-Install Exclusions\nDo this **before** installing, or the installer/setup files may get deleted mid-install.\n1. **Win key** → **Virus & Threat Protection** → **Manage Settings**.\n2. Turn off **Real-time protection**.\n3. Scroll down to **Exclusions** → **Add or remove exclusion** → leave this open, you'll need it again in Step 3.\n\n-# ─────────────────────────────────\n## 2️⃣ Install SteaMidra\n1. Go to **[SFF Releases](https://github.com/Midrags/SFF/releases)** and download the latest `.exe`.\n2. Run `SteaMidra-X.X.X-Setup.exe`.\n3. When it asks for the install location, copy the path:\n```\n\\AppData\\Local\\SteaMidra\\\n```\n4. Finish the install.\n\n-# ─────────────────────────────────\n## 3️⃣ Add Your Exclusions\nBack in **Virus & Threat Protection → Exclusions**:\n1. **Add folder** → paste the SteaMidra path you copied in Step 2.\n2. **Add folder** again for every Steam library you have, e.g.:\n```\nC:\\Program Files (x86)\\Steam\\\nA:\\SteamLibrary\nD:\\SteamLibrary\n```\n-# This keeps game fixes from getting quarantined/deleted after they're applied.\n\n-# ─────────────────────────────────\n## 4️⃣ First-Time Setup (Home Tab)\n1. Click **Auto LC Setup**.\n2. Click **Block Steam Updates**.\n3. Click **Install LumaCore** → wait for it to finish → **Close/Cancel** the prompt.\n\n-# ─────────────────────────────────\n## 5️⃣ Downloading a Game\n1. Go to the **Store** tab and search your game.\n2. Click **Download**.\n\n**If Steam download fails, try these in order:**\n- **DDMod (direct download)** — point it to a download location and move the files in manually.\n- **Older version** — use **SteamDB** to find the Build ID under the game's **Patches** tab, then download that build.\n\n-# ─────────────────────────────────\n## 🛠️ Fixing a Game\n\n### 🎮 Singleplayer\n1. Try launching **vanilla** first — some games have no protection at all.\n2. If it fails or errors, select the game from the dropdown → **HOME tab → LC Online Fix** (or add `-onlinefix` to the game's launch arguments) → try launching again.\n3. Still broken? It's likely **server-side auth** or another DRM. Check if the game is **SteamStub DRM protected**:\n   - **SteamStub** → select the game in SteaMidra → **Remove SteamStub DRM**.\n   - **Other DRM** → search **[cs.rin.ru](https://cs.rin.ru/forum/)** for your game and look for a **\"voksi\"/crack-only** release — not a full repack, just the crack files.\n\n### 🌐 Multiplayer\n1. Try **LC Online Fix** first (same as above).\n2. If that fails, select the game from the dropdown → **Multiplayer-Fix** — this opens **[online-fix.me](https://online-fix.me/)**.\n3. Click the **3rd blue download link**, download the fix/repair files.\n4. In SteaMidra: right-click the game → **Manage → Browse Local Files**, then drag the fix files into that folder.\n-# Archive password is always: `online-fix.me`\n5. Still not working? Search **[cs.rin.ru](https://cs.rin.ru/forum/)** forums for a fix thread on your specific game.\n\n-# ─────────────────────────────────\n## 💡 Extra — Hubcap Manifest API Key\nIf **MidraEveryday** manifests aren't working, grab a free API key from **[Hubcap Manifests Discord](https://discord.gg/hubcapsmanifest)** and add it under **Settings** in SteaMidra as a fallback depot provider.",
+      "color": 1752220,
+      "fields": []
+    }
+  ],
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "📦 SFF Releases",
+          "url": "https://github.com/Midrags/SFF/releases"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🌐 online-fix.me",
+          "url": "https://online-fix.me/"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🔍 cs.rin.ru",
+          "url": "https://cs.rin.ru/forum/"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🔑 Hubcap Manifests",
+          "url": "https://discord.gg/hubcapsmanifest"
+        }
+      ]
+    }
+  ]
+}
