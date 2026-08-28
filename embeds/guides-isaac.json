@@ -1,7 +1,7 @@
 {
   "embeds": [
     {
-      "description": "# 🎃 THE BINDING OF ISAAC: REBIRTH — ONLINE SETUP\n\n**Rebirth + Afterbirth + Afterbirth+ + Repentance + Repentance+ · OnlineFix · REPENTOGON pre-installed**\n\n> Full walkthrough for modded online co-op with friends — synced mod profiles included so nobody desyncs.\n\n-# ─────────────────────────────────\n## 📦 Version Info\n- 🎮 **Vanilla game (base .exe):** `v1.9.7.17.J460`\n- 🧩 **REPENTOGON-compatible build:** `v1.9.7.12.J273`\n-# REPENTOGON trails a few patches behind vanilla — that's expected, not an error. The clean files below already ship this matching pair.\n\n-# ─────────────────────────────────\n## 1️⃣ Download the Clean Files\nPre-packaged Rebirth install — **all DLC + OnlineFix + REPENTOGON already installed.**\n1. **[Download from Google Drive](https://drive.google.com/file/d/1UmaUTa-DAP0gDC_DyNhuRFusKKNoJJPI/view)**\n2. Extract the folder somewhere outside `Downloads` (and outside `Program Files`).\n-# If the link ever breaks, ping in this thread and it'll get reuploaded.\n\n-# ─────────────────────────────────\n## 2️⃣ Install the REPENTOGON Launcher\n1. Grab it → **[Launcher Releases · v0.4.6-beta](https://github.com/TeamREPENTOGON/Launcher/releases/tag/v0.4.6-beta)**\n2. Install it, then point it at the game `.exe` inside your extracted folder from Step 1.\n3. Launch once through the launcher to confirm REPENTOGON boots correctly before continuing.\n\n-# ─────────────────────────────────\n## 3️⃣ Set Up Isaac Profiles\nLets you keep multiple mod loadouts (online vs. singleplayer) without a second install, and keeps your online profile byte-identical to everyone else's — the #1 cause of random desyncs.\n1. Grab it → **[isaac-profiles](https://github.com/XevioQwerty/isaac-profiles)**\n2. Extract it **outside your Downloads folder**, then run `Setup.bat` and follow the wizard.\n3. It asks for your game path, mod folder, and profile names — it auto-detects most of this and backs up your existing mods first.\n4. Use the generated `Play Online.bat` / `Play Singleplayer.bat` shortcuts to switch profiles instantly.\n\n-# ─────────────────────────────────\n## 4️⃣ Sync Your Mods\nOnce your profile exists, sync it against the shared modpack so your mod list matches everyone else's exactly.\n1. Grab it → **[IsaacSync](https://github.com/XevioQwerty/IsaacSync)**\n2. Pick one:\n   - **Zip download** — grab the latest zip straight from GitHub and drop it into your online profile's mod folder.\n   - **Syncthing** — add the shared folder so your mods stay auto-updated whenever the modpack changes.\n\n-# ─────────────────────────────────\n## 5️⃣ Patch for Online Modded Co-op\nVanilla online co-op force-disables mods — this patches the binary so they stay active.\n1. Grab it → **[Isaac-Online-Modded](https://github.com/xADDBx/Isaac-Online-Modded)**\n2. Run it against your game binary as described in its README.\n-# Re-patch after every game or mod update — it doesn't survive a fresh binary.\n\n-# ─────────────────────────────────\n## 🚀 Play\nLaunch through the REPENTOGON launcher, invite your friends, and get in. Re-sync your mod profile with the group before every session to avoid desyncs.",
+      "description": "# 🎃 THE BINDING OF ISAAC: REBIRTH — ONLINE SETUP\n\n**SteaMidra + REPENTOGON · Isaac Profile Manager · OnlineFix**\n\n> Full walkthrough for modded online co-op with friends — shared mod profile included so nobody desyncs.\n\n-# ─────────────────────────────────\n## 1️⃣ Download the Game\n1. In **SteaMidra**, download **The Binding of Isaac: Rebirth**.\n2. Once it's downloaded, select the game from the dropdown in the **Home** tab and click **DLC Check**.\n3. Select **all** DLC checkboxes, then click **Download** (with **MidraEveryday**).\n\n-# ─────────────────────────────────\n## 2️⃣ Install the REPENTOGON Launcher\n1. Grab the latest zip → **[REPENTOGON Releases](https://github.com/TeamREPENTOGON/Launcher/releases)**\n2. Put the zip inside the **game's root folder** (same folder as the Isaac `.exe`).\n3. Extract it there using **Extract to `REPENTOGONLauncher\\`** (extract-to-subfolder / `/*`), so you end up with a `REPENTOGONLauncher` folder inside the game root.\n4. Launch the game through the launcher in that folder to confirm REPENTOGON boots correctly before continuing.\n\n-# ─────────────────────────────────\n## 3️⃣ Install Isaac Profile Manager\n-# Replaces the old Isaac Profiles + IsaacSync tools — both are deprecated now.\n1. Grab the latest release → **[Isaac Profile Manager](https://github.com/XevioQwerty/Isaac-Profile-Manager/releases)**\n2. Run the setup.\n3. Import the shared mod profile below — this gives you the exact same mod list as everyone else, which is the #1 fix for random desyncs.\n\n-# ─────────────────────────────────\n## 4️⃣ Patch for Online Modded Co-op\nVanilla online co-op force-disables mods — this patches the binary so they stay active.\n1. Grab it → **[Isaac-Online-Modded](https://github.com/xADDBx/Isaac-Online-Modded)**\n2. Run it against your game binary as described in its README.\n-# Re-patch after every game or mod update — it doesn't survive a fresh binary.\n\n-# ─────────────────────────────────\n## 🚀 Play\nLaunch through the REPENTOGON launcher, invite your friends, and get in. Re-import the shared mod profile in Isaac Profile Manager before every session to stay in sync with the group.",
       "color": 10038562,
       "fields": []
     }
@@ -13,14 +13,20 @@
         {
           "type": 2,
           "style": 5,
-          "label": "📦 Clean Files",
-          "url": "https://drive.google.com/file/d/1UmaUTa-DAP0gDC_DyNhuRFusKKNoJJPI/view"
+          "label": "🧩 REPENTOGON Launcher",
+          "url": "https://github.com/TeamREPENTOGON/Launcher/releases"
         },
         {
           "type": 2,
           "style": 5,
-          "label": "🧩 REPENTOGON Launcher",
-          "url": "https://github.com/TeamREPENTOGON/Launcher/releases/tag/v0.4.6-beta"
+          "label": "🗂️ Isaac Profile Manager",
+          "url": "https://github.com/XevioQwerty/Isaac-Profile-Manager/releases"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🌐 Online Modded Patch",
+          "url": "https://github.com/xADDBx/Isaac-Online-Modded"
         }
       ]
     },
@@ -30,20 +36,8 @@
         {
           "type": 2,
           "style": 5,
-          "label": "🗂️ Isaac Profiles",
-          "url": "https://github.com/XevioQwerty/isaac-profiles"
-        },
-        {
-          "type": 2,
-          "style": 5,
-          "label": "🔄 IsaacSync",
-          "url": "https://github.com/XevioQwerty/IsaacSync"
-        },
-        {
-          "type": 2,
-          "style": 5,
-          "label": "🌐 Online Modded Patch",
-          "url": "https://github.com/xADDBx/Isaac-Online-Modded"
+          "label": "📥 Shared Mod Profile",
+          "url": "https://cdn.discordapp.com/attachments/1009150547846250597/1542861781465042994/Vanilla_v1.0.ipmprofile.json?ex=6a92c581&is=6a917401&hm=f271121435a89f97233acbcd114d40a864ff2c8d29ffaf50a4aac574f548f871&"
         }
       ]
     }
