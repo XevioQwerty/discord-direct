@@ -1,2 +1,4 @@
-discord.py==2.3.2
-aiohttp==3.9.3
+discord.py>=2.6
+aiohttp>=3.9
+python-dotenv
+pillow>=10

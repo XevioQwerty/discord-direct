@@ -13,6 +13,8 @@ from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 
+import hub
+
 # ── Config ────────────────────────────────────────────────────────────────────
 load_dotenv()
 BOT_TOKEN     = os.getenv("DISCORD_BOT_TOKEN")
@@ -634,6 +636,7 @@ class DiscoGoon(commands.Bot):
 
 
 bot = DiscoGoon()
+hub.setup(bot, fetch=get_file, fetch_fresh=get_file_fresh)
 
 # ── /send ──────────────────────────────────────────────────────────────────────
 
@@ -703,6 +706,12 @@ async def cmd_send(
     embeds = build_embeds(msg_block)
     content = msg_block.get("content") or None
     view = get_special_view(data) or build_view(buttons)
+
+    if file == hub.REGISTRY_FILE:
+        await interaction.followup.send(
+            f"`{file}` is the Guides Hub registry — post it with `/hub publish` instead.", ephemeral=True
+        )
+        return
 
     # Prevent sending empty payloads to avoid 400 Bad Request error
     if not content and not embeds:
@@ -938,6 +947,10 @@ async def cmd_update(interaction: discord.Interaction) -> None:
             failed.append(f"`{fn}` — {exc}")
 
     parts: list[str] = []
+    try:
+        parts.append(f"**Guides Hub:** {await hub.refresh()}")
+    except Exception as exc:
+        parts.append(f"**Guides Hub:** refresh failed — {exc}")
     if succeeded:
         parts.append("**Refreshed:**\n" + "\n".join(f"• `{fn}`" for fn in succeeded))
     if failed:

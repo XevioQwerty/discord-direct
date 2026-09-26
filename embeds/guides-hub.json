@@ -1,0 +1,62 @@
+{
+  "hub": {
+    "title": "Guides Hub",
+    "kicker": "XEVIO CUSTOM",
+    "tagline": "Guides, tutorials & game fixes — all in one place. Pick a category below, search, or tap any title to jump straight in.",
+    "accent": "#F1C40F",
+    "guild_id": "976680631012589610",
+    "channel_id": "1095872451151413389",
+    "banner": "generate",
+    "featured_count": 4,
+    "recent_count": 3,
+    "new_days": 14,
+    "auto_discover": true,
+    "ignore_threads": [],
+    "reports_channel_id": null,
+    "footer": "💡 Type `/guide` anywhere to pull up a guide  ·  this hub updates itself"
+  },
+
+  "categories": [
+    { "id": "games",     "name": "Games & Repacks",   "emoji": "🎮", "color": "#FF7A45", "blurb": "Free / cracked installs, online fixes & co-op setups" },
+    { "id": "emulation", "name": "Emulation",         "emoji": "🕹️", "color": "#E03C8A", "blurb": "Play console games on PC — online included" },
+    { "id": "mods",      "name": "Mods & Cheats",     "emoji": "🛠️", "color": "#F1C40F", "blurb": "Menus, lobby mods & modded profiles" },
+    { "id": "tools",     "name": "Downloads & Steam", "emoji": "⏬", "color": "#3BA55C", "blurb": "Download managers, quota bypasses & Steam tools" },
+    { "id": "apps",      "name": "Apps & Devices",    "emoji": "📱", "color": "#5DADE2", "blurb": "Sideloading, calculators & other hardware" },
+    { "id": "system",    "name": "PC Tweaks",         "emoji": "💻", "color": "#9B59B6", "blurb": "Networking & desktop customisation" },
+    { "id": "external",  "name": "External Links",    "emoji": "🌐", "color": "#95A5A6", "blurb": "Trusted sites we point people to" }
+  ],
+
+  "guides": [
+    { "id": "fh6",         "title": "Forza Horizon 6",               "short": "Forza Horizon 6", "emoji": "🏁", "category": "games",     "thread": "1506914849391644703", "steam_appid": 2483190, "blurb": "Free repack + all DLC + online play",            "tags": ["repack", "fitgirl", "online", "racing"], "status": "working", "featured": true },
+    { "id": "golf-it",     "title": "Golf It!",                      "short": "Golf It!",        "emoji": "⛳", "category": "games",     "thread": "1547934932020629594", "steam_appid": 571740,  "blurb": "Free via SteaMidra + co-op map pack & manager", "tags": ["steamidra", "co-op", "maps"],             "status": "working" },
+    { "id": "isaac",       "title": "Binding of Isaac: Rebirth Online", "short": "Isaac Online", "emoji": "💣", "category": "games",     "thread": "1535365885206724739", "steam_appid": 250900,  "blurb": "Modded online co-op + synced mod profiles",      "tags": ["repentogon", "co-op", "online", "mods"], "status": "working" },
+    { "id": "lego-batman", "title": "LEGO® Batman: Legacy of the Dark Knight", "short": "LEGO Batman", "emoji": "🦇", "category": "games", "thread": "1511316991561170974", "steam_appid": 2215200, "blurb": "Cracked build + gold unlocks + fix",       "tags": ["cracked", "lego"],                        "status": "working" },
+    { "id": "minecraft",   "title": "Minecraft Server",              "short": "Minecraft Server", "emoji": "🏹", "category": "games",    "thread": "1095876056231190609",                         "blurb": "Host your own server",                           "tags": ["server", "hosting"] },
+
+    { "id": "switch",      "title": "Switch Emulator",               "short": "Switch Emu",      "emoji": "🔴", "category": "emulation", "thread": "1102946725431345222",                         "blurb": "Ryujinx & Yuzu on PC",                           "tags": ["nintendo", "ryujinx", "yuzu"] },
+    { "id": "rpcs3",       "title": "RPCS3 · PS3 Games",             "short": "RPCS3 / PS3",     "emoji": "🎮", "category": "emulation", "thread": "1102946464893780029",                         "blurb": "Emulate PS3 games & play online",                "tags": ["playstation", "ps3", "online"] },
+    { "id": "skate3",      "title": "Skate 3 Online",                "short": "Skate 3",         "emoji": "🛹", "category": "emulation", "thread": "1409579838133637250",                         "blurb": "Full RPCS3 online setup",                        "tags": ["rpcs3", "ps3", "online"] },
+
+    { "id": "gta",         "title": "GTA V Modding",                 "short": "GTA V Modding",   "emoji": "🔫", "category": "mods",      "thread": "1420920577727922176", "steam_appid": 271590,  "blurb": "Undetected menu · RP / stats / money",           "tags": ["menu", "gta online", "money"] },
+    { "id": "gamble",      "title": "Gamble With Unlimited Friends", "short": "Gamble Mod",      "emoji": "🎲", "category": "mods",      "thread": "1512185857724121338", "steam_appid": 3892270, "blurb": "Lift the lobby cap from 6 → 12 players",         "tags": ["lobby", "multiplayer"],                  "status": "working" },
+    { "id": "rounds",      "title": "Modded ROUNDS",                 "short": "ROUNDS",          "emoji": "🟠", "category": "mods",      "thread": "1271075945947598869", "steam_appid": 1557740, "blurb": "Modded 1.1.1 profile + online-fix (old-rounds-for-mods)", "tags": ["thunderstore", "r2modman", "online fix", "online"], "status": "working" },
+
+    { "id": "steamidra",   "title": "SteaMidra Setup",               "short": "SteaMidra",       "emoji": "🏴‍☠️", "category": "tools",  "thread": "1542853542719524924",                         "blurb": "LumaCore, auto online-fix & DDMod downloads",    "tags": ["steam", "online fix", "drm"],            "status": "working", "featured": true },
+    { "id": "downloads",   "title": "Download Managers & Tools",     "short": "Download Tools",  "emoji": "⬇️", "category": "tools",     "thread": "1520320829747888148",                         "blurb": "JDownloader, FDM, link extractor & Cloudflare tips", "tags": ["jdownloader", "fdm", "speed"] },
+    { "id": "mega",        "title": "Bypass MEGA Limits",            "short": "MEGA Bypass",     "emoji": "↪️", "category": "tools",     "thread": "1095875312467837001",                         "blurb": "Beat transfer quotas with MegaBasterd",          "tags": ["mega", "megabasterd", "quota"] },
+    { "id": "steamshare",  "title": "Concurrent Steamshare",         "short": "Steamshare",      "emoji": "🃏", "category": "tools",     "thread": "1095875714596745276",                         "blurb": "Share a Steam library with friends, live",       "tags": ["steam", "family share"] },
+
+    { "id": "ios",         "title": "iOS Sideload",                  "short": "iOS Sideload",    "emoji": "🍎", "category": "apps",      "thread": "1206485025441325086",                         "blurb": "Premium apps & tweaks — no jailbreak",           "tags": ["iphone", "ipa", "altstore"] },
+    { "id": "calculator",  "title": "Calculator · TI-84",            "short": "TI-84",           "emoji": "➕", "category": "apps",      "thread": "1431717085322678412",                         "blurb": "HD Picture Viewer + jailbreak",                  "tags": ["ti-84", "calculator", "jailbreak"] },
+
+    { "id": "mac-spoof",   "title": "MAC Spoof",                     "short": "MAC Spoof",       "emoji": "🌐", "category": "system",    "thread": "1095875817592082452",                         "blurb": "Change your network MAC address",                "tags": ["network", "mac address"] },
+    { "id": "desktop",     "title": "Clean Desktop Icons",           "short": "Clean Desktop",   "emoji": "🧼", "category": "system",    "thread": "1095875429329539162",                         "blurb": "Minimal, icon-free desktop setup",               "tags": ["windows", "desktop"] },
+
+    { "id": "vimm",        "title": "Emulator / ROM Archive",        "short": "ROM Archive",     "emoji": "🕹️", "category": "external",  "url": "https://vimm.net/vault",                         "blurb": "Trusted retro ROM vault (Vimm's Lair)",          "tags": ["roms", "retro"] }
+  ],
+
+  "changelog": [
+    { "date": "2026-09-26", "text": "New Guides Hub — search, categories & live updates" },
+    { "date": "2026-09-20", "text": "Added **Golf It!** with the co-op map pack" }
+  ]
+}

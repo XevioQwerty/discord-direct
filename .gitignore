@@ -15,3 +15,6 @@ venv/
 # Channel/thread dumps (contain raw guide links, passwords, attachment URLs)
 guides_dump.json
 guides_dump.md
+
+# Guides Hub runtime state (published message id, Steam art cache)
+state/
