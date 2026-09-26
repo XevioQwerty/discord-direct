@@ -28,7 +28,7 @@
   ],
 
   "guides": [
-    { "id": "fh6",         "title": "Forza Horizon 6",               "short": "Forza Horizon 6", "emoji": "🏁", "category": "games",     "thread": "1506914849391644703", "steam_appid": 2483190, "blurb": "Free repack + all DLC + online play",            "tags": ["repack", "fitgirl", "online", "racing"], "status": "working", "featured": 1 },
+    { "id": "fh6",         "title": "Forza Horizon 6",               "short": "Forza Horizon 6", "emoji": "🏁", "category": "games",     "thread": "1506914849391644703", "steam_appid": 2483190, "blurb": "v440.853 repack + 23 DLCs + online play",            "tags": ["repack", "fitgirl", "online", "racing"], "status": "working", "featured": 1 },
     { "id": "golf-it",     "title": "Golf It!",                      "short": "Golf It!",        "emoji": "⛳", "category": "games",     "thread": "1547934932020629594", "steam_appid": 571740,  "blurb": "Free via SteaMidra + co-op map pack & manager", "tags": ["steamidra", "co-op", "maps"],             "status": "working" },
     { "id": "isaac",       "title": "Binding of Isaac: Rebirth Online", "short": "Isaac Online", "emoji": "💣", "category": "games",     "thread": "1535365885206724739", "steam_appid": 250900,  "blurb": "Modded online co-op + synced mod profiles",      "tags": ["repentogon", "co-op", "online", "mods"], "status": "working", "featured": 3 },
     { "id": "lego-batman", "title": "LEGO® Batman: Legacy of the Dark Knight", "short": "LEGO Batman", "emoji": "🦇", "category": "games", "thread": "1511316991561170974", "steam_appid": 2215200, "blurb": "Cracked build + gold unlocks + fix",       "tags": ["cracked", "lego"],                        "status": "working" },
@@ -59,6 +59,7 @@
   ],
 
   "changelog": [
+    { "date": "2026-09-26", "text": "**Forza Horizon 6** → v440.853 + 23 DLCs, new Anker update & DLC list" },
     { "date": "2026-09-26", "text": "Added **NVIDIA crash fix** (616.xx driver rollback)" },
     { "date": "2026-09-26", "text": "**Modded ROUNDS** — new 1.1.1 profile + online-fix" },
     { "date": "2026-09-26", "text": "New Guides Hub — search, categories & live updates" },
