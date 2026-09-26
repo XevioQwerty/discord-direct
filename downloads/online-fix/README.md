@@ -12,6 +12,7 @@ match).
 | `OnlineFix-Toggle.bat` | universal toggle script (any game) |
 | `forza-horizon-online-fix.zip` | Forza Horizon *(upload)* |
 | `gamble-with-friends-online-fix.zip` | Gamble With Your Friends *(upload)* |
+| `ROUNDS-Fix-Repair-6707853.zip` | ROUNDS — `old-rounds-for-mods` build (password `online-fix.me`) |
 
 ## Raw link pattern
 

