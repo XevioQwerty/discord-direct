@@ -100,7 +100,7 @@ class Guide:
     image: str | None = None
     tags: list[str] = field(default_factory=list)
     status: str | None = None
-    featured: bool = False
+    featured: int = 0  # 0 = not pinned; 1, 2, 3… = pinned slot order
     auto: bool = False
     created: datetime.datetime | None = None
     updated: datetime.datetime | None = None
@@ -161,9 +161,9 @@ class Snapshot:
         return sorted(dated, key=lambda g: g.updated, reverse=True)[:n]  # type: ignore[arg-type,return-value]
 
     def featured(self) -> list[Guide]:
-        """Pinned guides first, then topped up with the most recently updated."""
+        """Pinned guides (in slot order) first, then topped up with the most recently updated."""
         n = int(self.hub.get("featured_count", 4))
-        picks = [g for g in self.guides if g.featured][:n]
+        picks = sorted((g for g in self.guides if g.featured), key=lambda g: g.featured)[:n]
         for g in self.recent(len(self.guides)):
             if len(picks) >= n:
                 break
@@ -204,7 +204,7 @@ def _guide_from_raw(raw: dict, guild_id: str) -> Guide:
         image=raw.get("image") or None,
         tags=list(raw.get("tags") or []),
         status=raw.get("status"),
-        featured=bool(raw.get("featured")),
+        featured=99 if raw.get("featured") is True else int(raw.get("featured") or 0),
         updated=_parse_date(raw.get("updated")),
     )
 
@@ -353,6 +353,18 @@ def _rgb(value: int) -> tuple[int, int, int]:
     return (value >> 16) & 255, (value >> 8) & 255, value & 255
 
 
+def _fit_card(img, size: tuple[int, int]):
+    """Fill *size*: wide art is cover-cropped; logos/square art sit on a blurred backdrop."""
+    from PIL import ImageFilter, ImageOps
+    w, h = size
+    if abs(img.width / img.height - w / h) < 0.35:
+        return ImageOps.fit(img, size)
+    backdrop = ImageOps.fit(img, size).filter(ImageFilter.GaussianBlur(18))
+    fg = ImageOps.contain(img, (w, h - 16))
+    backdrop.alpha_composite(fg, ((w - fg.width) // 2, (h - fg.height) // 2))
+    return backdrop
+
+
 def render_banner(snap: Snapshot, covers: list[bytes]) -> bytes:
     """A 1200×400 hero image: title, live stats, category chips and cover art."""
     from PIL import Image, ImageDraw, ImageFilter
@@ -389,7 +401,7 @@ def render_banner(snap: Snapshot, covers: list[bytes]) -> bytes:
     # (x, y, angle) per card; index 0 is the front card.
     slots = [(712, 150, 6), (850, 66, -4), (772, -22, 9)]
     for i, card in reversed(list(enumerate(cards))):
-        card = card.resize((352, 165))
+        card = _fit_card(card, (352, 165))
         mask = Image.new("L", card.size, 0)
         ImageDraw.Draw(mask).rounded_rectangle((0, 0, *card.size), 18, fill=255)
         card.putalpha(mask)
