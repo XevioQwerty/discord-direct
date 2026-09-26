@@ -107,7 +107,15 @@ class Guide:
 
     @property
     def link(self) -> str:
-        return f"**[{self.title}]({self.url})**"
+        return self.anchor(bold=True)
+
+    def anchor(self, text: str | None = None, *, bold: bool = False) -> str:
+        """Markdown link to the guide. Auto-discovered threads use a native <#id>
+        mention — raw thread names (emoji, ?, brackets) can break masked links."""
+        if self.auto and self.thread_id:
+            return f"<#{self.thread_id}>"
+        label = (text or self.title).replace("[", "(").replace("]", ")")
+        return f"**[{label}]({self.url})**" if bold else f"[{label}]({self.url})"
 
     def badges(self, new_days: int) -> list[str]:
         now = datetime.datetime.now(tz=UTC)
@@ -474,7 +482,7 @@ def _meta_line(g: Guide, snap: Snapshot, *, with_updated: bool = True) -> str:
 
 
 def _guide_section(g: Guide, snap: Snapshot, *, heading: str = "###") -> ui.Item:
-    lines = [f"{heading} {g.emoji} [{g.title}]({g.url})", g.blurb]
+    lines = [f"{heading} {g.emoji} {g.anchor()}", g.blurb]
     if meta := _meta_line(g, snap):
         lines.append(meta)
     text = "\n".join(l for l in lines if l)
@@ -491,12 +499,12 @@ def _directory_text(snap: Snapshot, mode: str) -> str:
             continue
         if mode == "full":
             out.append(f"**{c['emoji']} {c['name']}**")
-            out += [f"{g.emoji} [{g.title}]({g.url}) — {g.blurb}" for g in items]
+            out += [f"{g.emoji} {g.anchor()} — {g.blurb}" for g in items]
         elif mode == "compact":
             out.append(f"**{c['emoji']} {c['name']}**")
-            out.append("  ·  ".join(f"{g.emoji} [{g.short}]({g.url})" for g in items))
+            out.append("  ·  ".join(f"{g.emoji} {g.anchor(g.short)}" for g in items))
         elif mode == "mention":
-            refs = [f"<#{g.thread_id}>" if g.thread_id else f"[{g.short}]({g.url})" for g in items]
+            refs = [f"<#{g.thread_id}>" if g.thread_id else g.anchor(g.short) for g in items]
             out.append(f"**{c['emoji']} {c['name']}** " + " ".join(refs))
         else:  # counts
             out.append(f"{c['emoji']} **{c['name']}** · {len(items)} guide{'s' * (len(items) != 1)}")
@@ -594,7 +602,7 @@ def build_category_view(snap: Snapshot, cat_id: str) -> ui.LayoutView:
     for g in items[:9]:
         box.add_item(_guide_section(g, snap))
     if len(items) > 9:
-        box.add_item(ui.TextDisplay("-# …and more: " + "  ·  ".join(f"[{g.short}]({g.url})" for g in items[9:])))
+        box.add_item(ui.TextDisplay("-# …and more: " + "  ·  ".join(g.anchor(g.short) for g in items[9:])))
     box.add_item(ui.Separator())
     box.add_item(ui.ActionRow(_browse_select(snap, "📂  Switch category…")))
     view.add_item(box)
