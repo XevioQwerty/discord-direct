@@ -18,6 +18,7 @@
 
   "categories": [
     { "id": "games",     "name": "Games & Repacks",   "emoji": "🎮", "color": "#FF7A45", "blurb": "Free / cracked installs, online fixes & co-op setups" },
+    { "id": "fixes",     "name": "Fixes & Troubleshooting", "emoji": "🩹", "color": "#76B900", "blurb": "Crash fixes, driver issues & other PC headaches" },
     { "id": "emulation", "name": "Emulation",         "emoji": "🕹️", "color": "#E03C8A", "blurb": "Play console games on PC — online included" },
     { "id": "mods",      "name": "Mods & Cheats",     "emoji": "🛠️", "color": "#F1C40F", "blurb": "Menus, lobby mods & modded profiles" },
     { "id": "tools",     "name": "Downloads & Steam", "emoji": "⏬", "color": "#3BA55C", "blurb": "Download managers, quota bypasses & Steam tools" },
@@ -32,6 +33,8 @@
     { "id": "isaac",       "title": "Binding of Isaac: Rebirth Online", "short": "Isaac Online", "emoji": "💣", "category": "games",     "thread": "1535365885206724739", "steam_appid": 250900,  "blurb": "Modded online co-op + synced mod profiles",      "tags": ["repentogon", "co-op", "online", "mods"], "status": "working" },
     { "id": "lego-batman", "title": "LEGO® Batman: Legacy of the Dark Knight", "short": "LEGO Batman", "emoji": "🦇", "category": "games", "thread": "1511316991561170974", "steam_appid": 2215200, "blurb": "Cracked build + gold unlocks + fix",       "tags": ["cracked", "lego"],                        "status": "working" },
     { "id": "minecraft",   "title": "Minecraft Server",              "short": "Minecraft Server", "emoji": "🏹", "category": "games",    "thread": "1095876056231190609",                         "blurb": "Host your own server",                           "tags": ["server", "hosting"] },
+
+    { "id": "nvidia-crash", "title": "Games Crashing? NVIDIA Driver Fix", "short": "NVIDIA Crash Fix", "emoji": "💥", "category": "fixes",   "thread": "1553426039177347106",                         "blurb": "616.xx driver crashes → clean rollback to 610.88", "tags": ["nvidia", "driver", "crash", "gpu", "ddu", "kernel32", "ntdll"], "status": "working" },
 
     { "id": "switch",      "title": "Switch Emulator",               "short": "Switch Emu",      "emoji": "🔴", "category": "emulation", "thread": "1102946725431345222",                         "blurb": "Ryujinx & Yuzu on PC",                           "tags": ["nintendo", "ryujinx", "yuzu"] },
     { "id": "rpcs3",       "title": "RPCS3 · PS3 Games",             "short": "RPCS3 / PS3",     "emoji": "🎮", "category": "emulation", "thread": "1102946464893780029",                         "blurb": "Emulate PS3 games & play online",                "tags": ["playstation", "ps3", "online"] },
@@ -56,6 +59,8 @@
   ],
 
   "changelog": [
+    { "date": "2026-09-26", "text": "Added **NVIDIA crash fix** (616.xx driver rollback)" },
+    { "date": "2026-09-26", "text": "**Modded ROUNDS** — new 1.1.1 profile + online-fix" },
     { "date": "2026-09-26", "text": "New Guides Hub — search, categories & live updates" },
     { "date": "2026-09-20", "text": "Added **Golf It!** with the co-op map pack" }
   ]

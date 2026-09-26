@@ -1,0 +1,30 @@
+{
+  "embeds": [
+    {
+      "description": "# 💥 GAMES CRASHING? — NVIDIA DRIVER FIX\n\n**September 2026 · NVIDIA 616.xx driver regression**\n\n> Random crashes lately? Games force-closing, **\"GPU Crash Dump Triggered\"** messages, or crashes pointing to `kernel32` / `ntdll` — across **multiple unrelated games**? It's probably not the games. **It's the driver.**\n\n-# ─────────────────────────────────\n## 🔍 The Culprit\nNVIDIA's **616.xx** driver branch — including the current **616.92** (released Sep 9) — has known stability regressions. NVIDIA officially acknowledges some crashes (*Assassin's Creed Shadows* crashing to desktop after extended play, certain games failing to launch), but plenty of other games are affected too and just aren't on the official list yet.\n\n**Quick check:** open the **NVIDIA App** or **NVIDIA Control Panel** — if you're on a **616.xx** driver, that's very likely your problem.\n\n-# ─────────────────────────────────\n## 🛠️ The Fix — Roll Back the Driver\nDon't just *reinstall* — you need to fully wipe the driver and go back to an older, stable version.\n\n### 1️⃣ Download the Old Driver First\nGo to **[nvidia.com/drivers](https://www.nvidia.com/en-us/drivers/)**, find your exact GPU and grab **610.88** (the last version before the 616 branch). Save it somewhere you'll remember.\n\n### 2️⃣ Download DDU\nGet **[Display Driver Uninstaller](https://www.wagnardsoft.com/display-driver-uninstaller-DDU-)** from Wagnardsoft's official site and extract the zip.\n\n### 3️⃣ Boot Into Safe Mode\n**Settings → System → Recovery → Advanced startup → Restart now**\nthen **Troubleshoot → Advanced options → Startup Settings → Restart** → press **4** for Safe Mode.\n\n### 4️⃣ Run DDU\nSelect **GPU → NVIDIA → Clean and restart**. This wipes every trace of the current driver — not just a normal uninstall.\n\n### 5️⃣ Install 610.88\nOnce Windows boots back up normally, run the driver you saved → **Custom install** → check **Perform a clean installation** if it's offered.\n\n### 6️⃣ Test Your Games\nCrashes gone? You're good — just **avoid auto-updating** until NVIDIA actually fixes the 616 branch.\n\n-# ─────────────────────────────────\n-# ✅ Confirmed fix for crashes in *Dawnwalker* and *Bodycam* — good luck!",
+      "color": 7780608,
+      "footer": {
+        "text": "NVIDIA 616.xx crash fix • Sept. 2026"
+      }
+    }
+  ],
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "📥 NVIDIA Drivers",
+          "url": "https://www.nvidia.com/en-us/drivers/"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🧹 Get DDU",
+          "url": "https://www.wagnardsoft.com/display-driver-uninstaller-DDU-"
+        }
+      ]
+    }
+  ]
+}
