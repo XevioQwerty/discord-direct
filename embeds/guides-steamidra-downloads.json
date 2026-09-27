@@ -1,0 +1,8 @@
+{
+  "embeds": [
+    {
+      "description": "# 📥 STEAMIDRA — DOWNLOAD PROBLEMS\n\nSteam download failed? Try these **in order**.\n\n-# ─────────────────────────────────\n## 1️⃣ DDMod (Direct Download)\nDownload with **DDMod** instead → point it at a download folder → move the files into the game's install folder yourself.\n\n-# ─────────────────────────────────\n## 2️⃣ Grab an Older Version\nFind the game on **[SteamDB](https://steamdb.info/)** → **Patches** tab → copy a **Build ID** → download that build in SteaMidra.\n\n-# ─────────────────────────────────\n## 🔑 Game Not Found? Add an API Key\nIf **Free Providers** (formerly *MidraEveryday*) can't find a game, get a free key from the **[Hubcap Manifests Discord](https://discord.gg/hubcapsmanifest)** and add it in **Settings** as a fallback provider.\n-# The fork tests your keys at launch and warns you when one stops working.\n\n-# ─────────────────────────────────\n## ⏸️ Game Keeps Auto-Updating?\nOn the fork, games stay on their pinned version by default. Change it per game in **Auto Update Games**.",
+      "color": 1752220
+    }
+  ]
+}

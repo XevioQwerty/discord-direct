@@ -44,7 +44,7 @@
     { "id": "gamble",      "title": "Gamble With Unlimited Friends", "short": "Gamble Mod",      "emoji": "🎲", "category": "mods",      "thread": "1512185857724121338", "steam_appid": 3892270, "blurb": "Lift the lobby cap from 6 → 12 players",         "tags": ["lobby", "multiplayer"],                  "status": "working" },
     { "id": "rounds",      "title": "Modded ROUNDS",                 "short": "ROUNDS",          "emoji": "🟠", "category": "mods",      "thread": "1271075945947598869", "steam_appid": 1557740, "blurb": "Modded 1.1.1 profile + online-fix (old-rounds-for-mods)", "tags": ["thunderstore", "r2modman", "online fix", "online"], "status": "working", "featured": 4 },
 
-    { "id": "steamidra",   "title": "SteaMidra Setup",               "short": "SteaMidra",       "emoji": "🏴‍☠️", "category": "tools",  "thread": "1542853542719524924",                         "blurb": "LumaCore, auto online-fix & DDMod downloads",    "tags": ["steam", "online fix", "drm"],            "status": "working", "featured": 2, "image": "https://raw.githubusercontent.com/Midrags/SFF/main/SFF.png" },
+    { "id": "steamidra",   "title": "SteaMidra Setup",               "short": "SteaMidra",       "emoji": "🏴‍☠️", "category": "tools",  "thread": "1542853542719524924",                         "blurb": "Recommended fork + easy fix path: vanilla → -onlinefix → OnlineFixManager", "tags": ["steam", "online fix", "drm", "lumacore", "onlinefixmanager", "ddmod"],            "status": "working", "featured": 2, "image": "https://raw.githubusercontent.com/Midrags/SFF/main/SFF.png" },
     { "id": "downloads",   "title": "Download Managers & Tools",     "short": "Download Tools",  "emoji": "⬇️", "category": "tools",     "thread": "1520320829747888148",                         "blurb": "JDownloader, FDM, link extractor & Cloudflare tips", "tags": ["jdownloader", "fdm", "speed"] },
     { "id": "mega",        "title": "Bypass MEGA Limits",            "short": "MEGA Bypass",     "emoji": "↪️", "category": "tools",     "thread": "1095875312467837001",                         "blurb": "Beat transfer quotas with MegaBasterd",          "tags": ["mega", "megabasterd", "quota"] },
     { "id": "steamshare",  "title": "Concurrent Steamshare",         "short": "Steamshare",      "emoji": "🃏", "category": "tools",     "thread": "1095875714596745276",                         "blurb": "Share a Steam library with friends, live",       "tags": ["steam", "family share"] },
@@ -59,6 +59,7 @@
   ],
 
   "changelog": [
+    { "date": "2026-09-27", "text": "**SteaMidra** guide simplified — recommended fork + OnlineFixManager" },
     { "date": "2026-09-26", "text": "**Forza Horizon 6** → v440.853 + 23 DLCs, new Anker update & DLC list" },
     { "date": "2026-09-26", "text": "Added **NVIDIA crash fix** (616.xx driver rollback)" },
     { "date": "2026-09-26", "text": "**Modded ROUNDS** — new 1.1.1 profile + online-fix" },
