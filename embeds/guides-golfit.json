@@ -1,0 +1,39 @@
+{
+  "embeds": [
+    {
+      "description": "# ⛳ GOLF IT! — FREE + CO-OP WITH PIRATES\n\n**SteaMidra download · Golf It! Map Manager · Workshop maps without Steam auth**\n\n> Get Golf It! for free, play online with friends, and share custom maps — even with people who don't own the game.\n\n-# ─────────────────────────────────\n## 1️⃣ Download the Game\n**SteaMidra → Store → Golf It!** → **Everyday** / **Hubcap** → **Thru Steam** → **No** (if asked about game updates).\n-# New to SteaMidra? Set it up first with the **[SteaMidra guide](https://discord.com/channels/976680631012589610/1542853542719524924)**.\n\n-# ─────────────────────────────────\n## 2️⃣ Install the Map Manager\n1. Download **[Golf It! Map Manager](https://drive.google.com/file/d/1_idrB5s4JdFykACAb1uKeRjjIcK-pwPG/view?usp=sharing)**.\n2. Extract it anywhere → run `GolfItManager.exe` → **Setup** tab → **Install this app** (or keep it portable).\n\n-# ─────────────────────────────────\n## 3️⃣ Apply the Online-Fix\n1. **Close Steam completely** (Task Manager or the system tray).\n2. In GolfItManager's **Setup** tab → **Step 3** → click **Open** and download `Golf.It.v1.0.1.1953-OFME.rar`.\n3. **Browse** → select the `.rar` you downloaded → **Extract to Parked Folder**.\n4. Scroll to the bottom of the **Setup** tab → **Set it for me**.\n5. Make sure **Steam Cloud is turned off** for Golf It!.\n\n-# ─────────────────────────────────\n## 4️⃣ Play\nLaunch through **Steam** → **Play old**.\n> 💡 **How it works:** the manager swaps the 4 bytes that hold each map's Workshop ID for the map name as a custom file, bypassing Steam Workshop auth. As long as everyone has **byte-identical** map files, you can join instantly.\n\n-# ─────────────────────────────────\n## 🗺️ Don't Own the Game / No Workshop?\nComplete the setup above first, then:\n1. Download the **latest map pack** below.\n2. **Share** tab → **Import a Map Pack**.\n3. Launch through Steam → **Play old**.\n-# Sharing your maps with someone who doesn't own Golf It!? **Share → Export Map Pack** — or share a code/file for Workshop sharing.\n\n-# ─────────────────────────────────\n## 📦 Latest Map Pack\n**[12 Maps — golfit-coop-maps-2026-09-20.zip](https://drive.google.com/file/d/1tJZGGbod87h0R-E0pPAe78Zjed3gFYAf/view?usp=sharing)**",
+      "color": 3066993,
+      "thumbnail": {
+        "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/571740/header.jpg?t=1790080653"
+      },
+      "footer": {
+        "text": "Map pack: 12 maps • updated Sep 20, 2026"
+      }
+    }
+  ],
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 2,
+          "style": 5,
+          "label": "🛠️ Map Manager",
+          "url": "https://drive.google.com/file/d/1_idrB5s4JdFykACAb1uKeRjjIcK-pwPG/view?usp=sharing"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "📦 Latest Map Pack",
+          "url": "https://drive.google.com/file/d/1tJZGGbod87h0R-E0pPAe78Zjed3gFYAf/view?usp=sharing"
+        },
+        {
+          "type": 2,
+          "style": 5,
+          "label": "⭐ SteaMidra Guide",
+          "url": "https://discord.com/channels/976680631012589610/1542853542719524924"
+        }
+      ]
+    }
+  ]
+}
